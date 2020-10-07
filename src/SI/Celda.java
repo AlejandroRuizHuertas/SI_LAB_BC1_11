@@ -1,18 +1,26 @@
 package SI;
 
+import java.util.List;
+import java.util.Random;
+
 public class Celda {
 	private int fila;
 	private int columna;
 	private int valor;
+	private int n_vecinos;
 	private boolean excavada;
 	private boolean[] vecinos;
 
-	public Celda(int fila, int columna, int valor, boolean excavada, boolean[] vecinos) {
+	
+	public Celda(int fila, int columna) {
 		this.fila = fila;
 		this.columna = columna;
-		this.valor = valor;
-		this.excavada = excavada;
-		this.vecinos = vecinos;
+		this.valor = 0;
+	}
+
+
+	public Celda() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public int getFila() {
@@ -54,5 +62,6 @@ public class Celda {
 	public void setVecinos(boolean[] vecinos) {
 		this.vecinos = vecinos;
 	}
-
+	
+	
 }
