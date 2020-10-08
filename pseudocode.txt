@@ -17,7 +17,7 @@ Celdas = Crear_celdas (i,j)
  
 
 Celda_inicio= excavar_celda(celdas) 
-
+ 
  
 
  
