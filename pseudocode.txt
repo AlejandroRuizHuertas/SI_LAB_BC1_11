@@ -23,7 +23,7 @@ Celda_inicio= excavar_celda(celdas)
  
 
 While (todas las celdas no estén excavadas){ 
-
+ 
  
 
 Crear_camino(celdas_celda_inicio) 
