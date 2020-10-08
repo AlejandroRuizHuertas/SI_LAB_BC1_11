@@ -1,0 +1,91 @@
+Clase laberinto 
+
+ 
+
+Celdas 
+
+Columnas = i 
+
+Filas = j 
+
+ 
+
+//Creamos las celdas 
+
+Celdas = Crear_celdas (i,j) 
+
+ 
+
+Celda_inicio= excavar_celda(celdas) 
+
+ 
+
+ 
+
+While (todas las celdas no estén excavadas){ 
+
+ 
+
+Crear_camino(celdas_celda_inicio) 
+
+ 
+
+ 
+
+} 
+
+ 
+
+ 
+
+Crear_Camino(celdas, celda_inicio){ 
+
+ 
+
+Camino = Cola de celdas; 
+
+Movimientos = Cola de movimientos; 
+
+ 
+
+While(!Celda_actual.estaExcavado()){ 
+
+ 
+
+Vecino_aleatorio, movimiento = Generar_Vecino_Aleatorio(celdas, celda_actual) 
+
+Boolean visitado = Comprobar_Visitado(vecino_aleatorio, camino) 
+
+ 
+
+Si (!visitado) 
+
+Celda_actual = vecino_aleatorio 
+
+Insertar(celda_actual, camino) 
+
+Insertar(movimiento_actual, movimientos) 
+
+Marcar_visitada(celda_actual) 
+
+ 
+
+Else 
+
+Borrar_camino_bucle(celda_actual, camino) 
+
+Borrar_movimientos_bucle(movimiento_actual, movimientos) 
+
+Return camino, movimientos 
+
+} 
+
+ 
+
+ExcavarCamino(camino); 
+
+ 
+
+} 
+
+ 
