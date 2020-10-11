@@ -7,8 +7,10 @@ public class Celda {
 	private int fila;
 	private int columna;
 	private int valor;
-	private int n_vecinos;
+	//private int n_vecinos;
+	private boolean camino = false;
 	private boolean excavada;
+	private boolean visitado = false;
 	private boolean[] vecinos;
 
 	
@@ -16,6 +18,7 @@ public class Celda {
 		this.fila = fila;
 		this.columna = columna;
 		this.valor = 0;
+		//this.setVisitado(visitado);
 	}
 
 
@@ -62,6 +65,23 @@ public class Celda {
 	public void setVecinos(boolean[] vecinos) {
 		this.vecinos = vecinos;
 	}
+
+
+	public boolean getVisitado() {
+		return visitado;
+	}
+
+
+	public void setVisitado(boolean visitado) {
+		this.visitado = visitado;
+	}
 	
+	public boolean getCamino() {
+		return camino;
+	}
+	
+	public void setCamino(boolean camino) {
+		this.camino = camino;
+	}
 	
 }
