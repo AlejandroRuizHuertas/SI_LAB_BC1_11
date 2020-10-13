@@ -13,11 +13,13 @@ public class Wilson{
 	private final Random random = new Random();
 	
 	
-	public Wilson(List<Celda> listaCeldas) {
+	public Wilson(List<Celda> listaCeldas, int filas, int columnas) {
 		this.listaCeldas = listaCeldas;
+		inicializarCelda(filas, columnas);
 		actual = listaCeldas.get(random.nextInt(listaCeldas.size()));
 		actual.setVisitado(true);
 		actual = listaCeldas.get(random.nextInt(listaCeldas.size()));
+		excavar();
 
 	}
 
@@ -88,12 +90,13 @@ public class Wilson{
 	 * 
 	 * Version 1.0
 	 */
-	public void inicializarCelda(int filas, int columnas) {
+	public List<Celda> inicializarCelda(int filas, int columnas) {
 		for (int i = 0; i < filas; i++) {
 			for (int j = 0; j < columnas; j++) {
 				listaCeldas.add(new Celda(i, j));
 			}
 		}
+		return listaCeldas;
 	}
 
 	/*
