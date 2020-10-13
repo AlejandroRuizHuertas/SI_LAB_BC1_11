@@ -16,12 +16,13 @@ public class main {
 		
 		int matriz[][] = Wilson.crearMatriz(filas, columnas);
 		
-		for(int i=0; i<filas; i++) {
-			for(int j=0; j<filas; j++) {
-				System.out.println(matriz[i][j] + " \n");
+		for(int i=0; i<matriz.length; i++) {
+			for(int j=0; j<matriz[i].length; j++) {
+				System.out.print(matriz[i][j] + " ");
 			}
-			System.out.println("\n");
+			System.out.println();
 		}
+		
 	}
 	
 }
