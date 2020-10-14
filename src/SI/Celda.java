@@ -27,6 +27,7 @@ public class Celda {
 		this.fila = fila;
 		this.columna = columna;
 		this.valor = 0;
+		paredes = new boolean[] {false, false, false, false};
 	}
 
 	
