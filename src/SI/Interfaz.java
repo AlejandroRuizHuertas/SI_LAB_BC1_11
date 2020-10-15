@@ -23,7 +23,6 @@ public class Interfaz extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtFieldFilas;
 	private JTextField txtFieldColumnas;
-	private JLabel lblLaberinto;
 	private JLabel lblColumnas;
 	private JLabel lblFilas;
 	private JButton btnAceptar;
@@ -34,6 +33,7 @@ public class Interfaz extends JFrame {
 	 * Create the frame.
 	 */
 	public Interfaz() {
+		
 		setTitle("Creador de laberintos");
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,15 +48,6 @@ public class Interfaz extends JFrame {
 		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
-		
-		lblLaberinto = new JLabel("Laberinto no creado");
-		lblLaberinto.setHorizontalAlignment(SwingConstants.CENTER);
-		GridBagConstraints gbc_lblLaberinto = new GridBagConstraints();
-		gbc_lblLaberinto.gridheight = 4;
-		gbc_lblLaberinto.insets = new Insets(0, 0, 5, 5);
-		gbc_lblLaberinto.gridx = 4;
-		gbc_lblLaberinto.gridy = 1;
-		contentPane.add(lblLaberinto, gbc_lblLaberinto);
 		
 		lblFilas = new JLabel("Introduce el n\u00FAmero de filas:");
 		GridBagConstraints gbc_lblFilas = new GridBagConstraints();
