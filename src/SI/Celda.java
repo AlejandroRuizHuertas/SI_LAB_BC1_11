@@ -6,7 +6,6 @@ import java.util.Random;
 
 public class Celda {
 	
-	final Random random = new Random();
 	
 	private int fila;
 	private int columna;
@@ -42,6 +41,7 @@ public class Celda {
 	 * Version 1.1
 	 */
 	public Celda celdaVecinaAleatoria(List<Celda> listaVecinos) {
+		Random random = new Random();
 		Celda celda = listaVecinos.get(random.nextInt(listaVecinos.size()));
 		celda.setVisitado(true);
 		return celda;

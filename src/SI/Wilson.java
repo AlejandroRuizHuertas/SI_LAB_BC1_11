@@ -3,30 +3,28 @@ package SI;
 import java.util.*;
 import java.util.stream.Collectors;
 
+public class Wilson {
 
-public class Wilson{
-
-	private List<Celda> listaCeldas = new ArrayList<Celda>();
-	//static List<Celda> camino = new ArrayList<Celda>();
+	// static List<Celda> camino = new ArrayList<Celda>();
 	final Stack<Celda> pila = new Stack<Celda>();
 	private Celda actual;
 	private final Random random = new Random();
-	
-	
-	public Wilson(List<Celda> listaCeldas, int filas, int columnas) {
-		this.listaCeldas = listaCeldas;
-		inicializarCelda(filas, columnas);
-		actual = listaCeldas.get(random.nextInt(listaCeldas.size()));
-		actual.setVisitado(true);
-		actual = listaCeldas.get(random.nextInt(listaCeldas.size()));
-		excavar();
 
+	public static void crearLaberinto(Celda[][] laberinto) {
+		Random random = new Random();
+
+		int filas = laberinto.length;
+		int columnas = laberinto[0].length;
+		inicializarCeldas(laberinto);
+		Celda actual;
+		actual = laberinto[random.nextInt(filas)][random.nextInt(columnas)];
+		actual.setVisitado(true);
+		while (actual.getVisitado()) {
+			actual = laberinto[random.nextInt(filas)][random.nextInt(columnas)];
+		}
+		excavar();
 	}
 
-	
-	
-	
-	
 	/*
 	 * Nombre: excavar
 	 * 
@@ -36,67 +34,51 @@ public class Wilson{
 	 * Version: 1.2
 	 */
 	public void excavar() {
-		if(actual.getVisitado()) {
+		if (actual.getVisitado()) {
 			añadirAlCamino();
-			
-			List<Celda> noCamino = listaCeldas.parallelStream().filter(c -> !c.getVisitado()).collect(Collectors.toList());
+
+			List<Celda> noCamino = arrayCeldas.parallelStream().filter(c -> !c.getVisitado())
+					.collect(Collectors.toList());
 			if (!noCamino.isEmpty()) {
 				actual = noCamino.get(random.nextInt(noCamino.size()));
 			}
 		}
-		
+
 		actual.setCamino(true);
-		Celda proxima = actual.obtenerCeldaSinCamino(listaCeldas);
-		
-		if(proxima != null) {
+		Celda proxima = actual.obtenerCeldaSinCamino(arrayCeldas);
+
+		if (proxima != null) {
 			pila.push(actual);
 			actual.eliminarPared(proxima);
 			actual = proxima;
-		}else if(!pila.isEmpty()) {
+		} else if (!pila.isEmpty()) {
 			actual = pila.pop();
-			}
+		}
 	}
-	
+
 	private void añadirAlCamino() {
-		listaCeldas.parallelStream().filter(c -> c.getCamino()).forEach(c->{
+		arrayCeldas.parallelStream().filter(c -> c.getCamino()).forEach(c -> {
 			c.setVisitado(true);
 			c.setCamino(false);
 		});
 		pila.clear();
 	}
 
-
-
-
-	/*
-	 * Nombre: Crear Matriz
-	 * 
-	 * Explicacion: Generamos una matriz con las dimensiones que le especifiquemos
-	 * mediante filas y columnas
-	 * 
-	 * Version 1.0
-	 */
-	public static int[][] crearMatriz(int filas, int columnas) {
-
-		int matriz[][] = new int[filas][columnas];
-		return matriz;
-	}
-
 	/*
 	 * Nombre: inicializarCelda
 	 * 
 	 * Explicacion: Con la matriz previamente generada, añadimos cada una de las
-	 * celdas a una lista de celdas
+	 * celdas a una matriz de celdas
 	 * 
 	 * Version 1.0
 	 */
-	public List<Celda> inicializarCelda(int filas, int columnas) {
-		for (int i = 0; i < filas; i++) {
-			for (int j = 0; j < columnas; j++) {
-				listaCeldas.add(new Celda(i, j));
+	public static void inicializarCeldas(Celda[][] arrayCeldas) {
+		for (int i = 0; i < arrayCeldas.length; i++) {
+			for (int j = 0; j < arrayCeldas[0].length; j++) {
+				arrayCeldas[i][j] = new Celda(i, j);
 			}
 		}
-		return listaCeldas;
+
 	}
 
 	/*
@@ -113,28 +95,14 @@ public class Wilson{
 		return posicion;
 	}
 
-
-
-
-
-	
-	
-	
-	
-	
-
-	
-	
-	
-
 	/*
-	 * public Celda obtenerVecinoNoExcavado(List<Celda> listaCeldas) { List<Celda>
+	 * public Celda obtenerVecinoNoExcavado(List<Celda> arrayCeldas) { List<Celda>
 	 * listaVecinos = new ArrayList<Celda>(4);
 	 * 
-	 * Celda norte = comprobarCeldaVecina(listaCeldas, new Celda(filas, columnas -
-	 * 1)); Celda este = comprobarCeldaVecina(listaCeldas, new Celda(filas + 1,
-	 * columnas)); Celda sur = comprobarCeldaVecina(listaCeldas, new Celda(filas,
-	 * columnas + 1)); Celda oeste = comprobarCeldaVecina(listaCeldas, new
+	 * Celda norte = comprobarCeldaVecina(arrayCeldas, new Celda(filas, columnas -
+	 * 1)); Celda este = comprobarCeldaVecina(arrayCeldas, new Celda(filas + 1,
+	 * columnas)); Celda sur = comprobarCeldaVecina(arrayCeldas, new Celda(filas,
+	 * columnas + 1)); Celda oeste = comprobarCeldaVecina(arrayCeldas, new
 	 * Celda(filas - 1, columnas));
 	 * 
 	 * if (norte != null && !norte.isExcavada()) { listaVecinos.add(norte); } else

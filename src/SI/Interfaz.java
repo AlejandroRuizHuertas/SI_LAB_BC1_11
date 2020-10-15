@@ -1,6 +1,5 @@
 package SI;
 
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -13,6 +12,8 @@ import java.awt.Insets;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -26,16 +27,14 @@ public class Interfaz extends JFrame {
 	private JLabel lblColumnas;
 	private JLabel lblFilas;
 	private JButton btnAceptar;
-	
-
 
 	/**
 	 * Create the frame.
 	 */
 	public Interfaz() {
-		
+
 		setTitle("Creador de laberintos");
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		setLocationRelativeTo(null);
@@ -43,12 +42,12 @@ public class Interfaz extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{0, 209, 124, 44, 0, 37, 0};
-		gbl_contentPane.rowHeights = new int[]{0, 188, 0, 27, 192, 0, 0};
-		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_contentPane.columnWidths = new int[] { 0, 209, 124, 44, 0, 37, 0 };
+		gbl_contentPane.rowHeights = new int[] { 0, 188, 0, 27, 192, 0, 0 };
+		gbl_contentPane.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
+		gbl_contentPane.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		contentPane.setLayout(gbl_contentPane);
-		
+
 		lblFilas = new JLabel("Introduce el n\u00FAmero de filas:");
 		GridBagConstraints gbc_lblFilas = new GridBagConstraints();
 		gbc_lblFilas.anchor = GridBagConstraints.EAST;
@@ -56,10 +55,19 @@ public class Interfaz extends JFrame {
 		gbc_lblFilas.gridx = 1;
 		gbc_lblFilas.gridy = 2;
 		contentPane.add(lblFilas, gbc_lblFilas);
-		
+
 		txtFieldFilas = new JTextField();
+		txtFieldFilas.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				char caracter = e.getKeyChar();
+
+				// Verificar si la tecla pulsada no es un digito
+				if (((caracter < '0') || (caracter > '9')) && (caracter != '\b' /* corresponde a BACK_SPACE */)) {
+					e.consume(); // ignorar el evento de teclado
+				}
+			}
+		});
 		txtFieldFilas.setHorizontalAlignment(SwingConstants.CENTER);
-		txtFieldFilas.setText("0");
 		GridBagConstraints gbc_txtFieldFilas = new GridBagConstraints();
 		gbc_txtFieldFilas.insets = new Insets(0, 0, 5, 5);
 		gbc_txtFieldFilas.fill = GridBagConstraints.HORIZONTAL;
@@ -67,7 +75,7 @@ public class Interfaz extends JFrame {
 		gbc_txtFieldFilas.gridy = 2;
 		contentPane.add(txtFieldFilas, gbc_txtFieldFilas);
 		txtFieldFilas.setColumns(10);
-		
+
 		lblColumnas = new JLabel("Introduce el n\u00FAmero de columnas:");
 		GridBagConstraints gbc_lblColumnas = new GridBagConstraints();
 		gbc_lblColumnas.anchor = GridBagConstraints.EAST;
@@ -75,10 +83,19 @@ public class Interfaz extends JFrame {
 		gbc_lblColumnas.gridx = 1;
 		gbc_lblColumnas.gridy = 3;
 		contentPane.add(lblColumnas, gbc_lblColumnas);
-		
+
 		txtFieldColumnas = new JTextField();
+		txtFieldColumnas.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				char caracter = e.getKeyChar();
+
+				// Verificar si la tecla pulsada no es un digito
+				if (((caracter < '0') || (caracter > '9')) && (caracter != '\b' /* corresponde a BACK_SPACE */)) {
+					e.consume(); // ignorar el evento de teclado
+				}
+			}
+		});
 		txtFieldColumnas.setHorizontalAlignment(SwingConstants.CENTER);
-		txtFieldColumnas.setText("0");
 		GridBagConstraints gbc_txtFieldColumnas = new GridBagConstraints();
 		gbc_txtFieldColumnas.insets = new Insets(0, 0, 5, 5);
 		gbc_txtFieldColumnas.fill = GridBagConstraints.HORIZONTAL;
@@ -86,7 +103,7 @@ public class Interfaz extends JFrame {
 		gbc_txtFieldColumnas.gridy = 3;
 		contentPane.add(txtFieldColumnas, gbc_txtFieldColumnas);
 		txtFieldColumnas.setColumns(10);
-		
+
 		btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new BtnAceptarActionListener());
 		GridBagConstraints gbc_btnAceptar = new GridBagConstraints();
@@ -102,22 +119,12 @@ public class Interfaz extends JFrame {
 			int columnas = Integer.parseInt(txtFieldColumnas.getText());
 			Celda[][] laberinto = new Celda[filas][columnas];
 
-			for (int i = 0; i < laberinto.length; i++) {
-				for (int j = 0; j < laberinto[0].length; j++) {
 
-					Celda c = new Celda(i, j);
-
-					laberinto[i][j] = c;
-				}
-			}
-			
+			Wilson.crearLaberinto(laberinto);
 
 			Formas frame = new Formas(laberinto);
 			frame.setVisible(true);
 		}
 	}
-
-	
-	
 
 }
