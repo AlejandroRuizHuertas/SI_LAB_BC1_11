@@ -98,7 +98,22 @@ public class Interfaz extends JFrame {
 
 	private class BtnAceptarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			int filas = Integer.parseInt(txtFieldFilas.getText());
+			int columnas = Integer.parseInt(txtFieldColumnas.getText());
+			Celda[][] laberinto = new Celda[filas][columnas];
+
+			for (int i = 0; i < laberinto.length; i++) {
+				for (int j = 0; j < laberinto[0].length; j++) {
+
+					Celda c = new Celda(i, j);
+
+					laberinto[i][j] = c;
+				}
+			}
 			
+
+			Formas frame = new Formas(laberinto);
+			frame.setVisible(true);
 		}
 	}
 
