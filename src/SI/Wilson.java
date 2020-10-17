@@ -68,14 +68,30 @@ public class Wilson {
 	 * Nombre: inicializarCelda
 	 * 
 	 * Explicacion: Con la matriz previamente generada, añadimos cada una de las
-	 * celdas a una matriz de celdas
+	 * celdas a una matriz de celdas y se ponen las paredes de los extremos
 	 * 
-	 * Version 1.0
+	 * Version 1.1
 	 */
+
+	// norte, este, sur , oeste
+
 	public static void inicializarCeldas(Celda[][] arrayCeldas) {
 		for (int i = 0; i < arrayCeldas.length; i++) {
 			for (int j = 0; j < arrayCeldas[0].length; j++) {
-				arrayCeldas[i][j] = new Celda(i, j);
+				boolean[] paredes = { false, false, false, false };
+				if (i == 0) {
+					paredes[0] = true; //norte
+				}
+				if (j == (arrayCeldas.length - 1)) {
+					paredes[1] = true; // este
+				}
+				if (i == (arrayCeldas.length - 1)) {
+					paredes[2] = true; //sur
+				}
+				if (j == 0) {
+					paredes[3] = true; // oeste
+				}
+				arrayCeldas[i][j] = new Celda(i, j, paredes);
 			}
 		}
 

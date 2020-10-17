@@ -22,11 +22,11 @@ public class Celda {
 	private boolean[] paredes;
 
 	
-	public Celda(int fila, int columna) {
+	public Celda(int fila, int columna, boolean[] paredes) {
 		this.fila = fila;
 		this.columna = columna;
 		this.valor = 0;
-		paredes = new boolean[] {false, false, false, false};
+		this.paredes = paredes;
 	}
 
 	
