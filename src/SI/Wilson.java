@@ -7,7 +7,7 @@ public class Wilson {
 
 	// static List<Celda> camino = new ArrayList<Celda>();
 	final Stack<Celda> pila = new Stack<Celda>();
-	private Celda actual;
+	private static Celda actual;
 	private final Random random = new Random();
 
 	public static void crearLaberinto(Celda[][] laberinto) {
@@ -33,8 +33,16 @@ public class Wilson {
 	 * 
 	 * Version: 1.2
 	 */
-	public void excavar() {
-		if (actual.getVisitado()) {
+	public static void excavar() {
+		
+		while(!actual.isExcavada()) {
+			
+		}
+		
+		
+		
+	}
+		/*if (actual.getVisitado()) {
 			añadirAlCamino();
 
 			List<Celda> noCamino = arrayCeldas.parallelStream().filter(c -> !c.getVisitado())
@@ -54,7 +62,7 @@ public class Wilson {
 		} else if (!pila.isEmpty()) {
 			actual = pila.pop();
 		}
-	}
+	}*/
 
 	private void añadirAlCamino() {
 		arrayCeldas.parallelStream().filter(c -> c.getCamino()).forEach(c -> {
@@ -78,20 +86,20 @@ public class Wilson {
 	public static void inicializarCeldas(Celda[][] arrayCeldas) {
 		for (int i = 0; i < arrayCeldas.length; i++) {
 			for (int j = 0; j < arrayCeldas[0].length; j++) {
-				boolean[] paredes = { false, false, false, false };
+				boolean[] vecinos = { true, true, true, true };
 				if (i == 0) {
-					paredes[0] = true; //norte
+					vecinos[0] = false; //norte
 				}
 				if (j == (arrayCeldas.length - 1)) {
-					paredes[1] = true; // este
+					vecinos[1] = false; // este
 				}
 				if (i == (arrayCeldas.length - 1)) {
-					paredes[2] = true; //sur
+					vecinos[2] = false; //sur
 				}
 				if (j == 0) {
-					paredes[3] = true; // oeste
+					vecinos[3] = false; // oeste
 				}
-				arrayCeldas[i][j] = new Celda(i, j, paredes);
+				arrayCeldas[i][j] = new Celda(i, j, vecinos);
 			}
 		}
 
