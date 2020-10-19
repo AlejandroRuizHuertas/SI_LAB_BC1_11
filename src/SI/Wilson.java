@@ -3,12 +3,17 @@ package SI;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import SI.Celda.Movimientos;
+
 public class Wilson {
 
-	// static List<Celda> camino = new ArrayList<Celda>();
+	static List<Celda> camino = new ArrayList<Celda>();
 	final Stack<Celda> pila = new Stack<Celda>();
 	private static Celda actual;
 	private final Random random = new Random();
+	final static List<Celda> listaCeldas = new ArrayList<Celda>();
+	
+	
 
 	public static void crearLaberinto(Celda[][] laberinto) {
 		Random random = new Random();
@@ -16,13 +21,23 @@ public class Wilson {
 		int filas = laberinto.length;
 		int columnas = laberinto[0].length;
 		inicializarCeldas(laberinto);
+		rellenarLista(laberinto);
 		Celda actual;
 		actual = laberinto[random.nextInt(filas)][random.nextInt(columnas)];
 		actual.setVisitado(true);
 		while (actual.getVisitado()) {
 			actual = laberinto[random.nextInt(filas)][random.nextInt(columnas)];
 		}
-		excavar();
+		hacerCamino(actual);
+	}
+
+	private static void rellenarLista(Celda[][] laberinto) {
+
+		for (int i = 0; i < laberinto.length; i++) {
+			for (int j = 0; j < laberinto[0].length; j++) {
+				listaCeldas.add(laberinto[i][j]);
+			}
+		}
 	}
 
 	/*
@@ -35,43 +50,30 @@ public class Wilson {
 	 */
 	public static void excavar() {
 		
-		while(!actual.isExcavada()) {
-			
-		}
-		
-		
 		
 	}
-		/*if (actual.getVisitado()) {
-			añadirAlCamino();
-
-			List<Celda> noCamino = arrayCeldas.parallelStream().filter(c -> !c.getVisitado())
-					.collect(Collectors.toList());
-			if (!noCamino.isEmpty()) {
-				actual = noCamino.get(random.nextInt(noCamino.size()));
-			}
-		}
-
-		actual.setCamino(true);
-		Celda proxima = actual.obtenerCeldaSinCamino(arrayCeldas);
-
-		if (proxima != null) {
-			pila.push(actual);
-			actual.eliminarPared(proxima);
-			actual = proxima;
-		} else if (!pila.isEmpty()) {
-			actual = pila.pop();
-		}
-	}*/
-
-	private void añadirAlCamino() {
-		arrayCeldas.parallelStream().filter(c -> c.getCamino()).forEach(c -> {
-			c.setVisitado(true);
-			c.setCamino(false);
-		});
-		pila.clear();
+	
+	
+	public static void hacerCamino(Celda actual, Celda) {
+		while
+		Celda proxima = obtenerVecinoNoVisitado(laberinto);
+		actual = proxima;
 	}
+	/*
+	 * if (actual.getVisitado()) { añadirAlCamino();
+	 * 
+	 * List<Celda> noCamino = arrayCeldas.parallelStream().filter(c ->
+	 * !c.getVisitado()) .collect(Collectors.toList()); if (!noCamino.isEmpty()) {
+	 * actual = noCamino.get(random.nextInt(noCamino.size())); } }
+	 * 
+	 * actual.setCamino(true); Celda proxima =
+	 * actual.obtenerCeldaSinCamino(arrayCeldas);
+	 * 
+	 * if (proxima != null) { pila.push(actual); actual.eliminarPared(proxima);
+	 * actual = proxima; } else if (!pila.isEmpty()) { actual = pila.pop(); } }
+	 */
 
+	
 	/*
 	 * Nombre: inicializarCelda
 	 * 
@@ -88,13 +90,13 @@ public class Wilson {
 			for (int j = 0; j < arrayCeldas[0].length; j++) {
 				boolean[] vecinos = { true, true, true, true };
 				if (i == 0) {
-					vecinos[0] = false; //norte
+					vecinos[0] = false; // norte
 				}
-				if (j == (arrayCeldas.length - 1)) {
+				if (j == (arrayCeldas[0].length - 1)) {
 					vecinos[1] = false; // este
 				}
 				if (i == (arrayCeldas.length - 1)) {
-					vecinos[2] = false; //sur
+					vecinos[2] = false; // sur
 				}
 				if (j == 0) {
 					vecinos[3] = false; // oeste
@@ -105,19 +107,6 @@ public class Wilson {
 
 	}
 
-	/*
-	 * Nombre: celdaAleatoria
-	 * 
-	 * Explicacion: Genera un numero aleatorio para asi poder escoger la casilla de
-	 * inicio y de fin a la hora de generar el laberinto
-	 * 
-	 * Version 1.0
-	 */
-	public int celdaAleatoria(int limite) {
-
-		int posicion = (int) Math.random() * limite + 1;
-		return posicion;
-	}
 
 	/*
 	 * public Celda obtenerVecinoNoExcavado(List<Celda> arrayCeldas) { List<Celda>
