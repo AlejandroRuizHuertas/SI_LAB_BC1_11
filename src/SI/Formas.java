@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
 
 public class Formas extends JFrame {
 
@@ -37,17 +38,22 @@ public class Formas extends JFrame {
 	 * Create the frame.
 	 */
 	public Formas(Celda[][] lab) {
+		setResizable(false);
 		this.laberinto = lab;
-		this.setBounds(0, 0, 600, 400);
+		this.setBounds(0, 0, 400, 400);
 		this.setLocationRelativeTo(null);
+		
+		JButton btnGuardar = new JButton("Guardar");
+		getContentPane().add(btnGuardar, BorderLayout.SOUTH);
 
 	}
 
 	public void paint(Graphics g) {
-
-		int grosor = 40;
-		int inicio = 50;
 		super.paint(g);
+		int grosor = elegirGrosorMax();
+		int inicio = 40;
+		
+		
 
 		for (int i = 0; i < laberinto.length; i++) {
 			for (int j = 0; j < laberinto[0].length; j++) {
@@ -60,6 +66,11 @@ public class Formas extends JFrame {
 			}
 		}
 
+	}
+
+	private int elegirGrosorMax() {
+		if (laberinto.length > laberinto[0].length) return 320/laberinto.length;
+		else return 320/laberinto[0].length;
 	}
 
 	private void dibujarParedes(Celda c, int inicio, int grosor, Graphics g) {
