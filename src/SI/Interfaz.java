@@ -164,6 +164,7 @@ public class Interfaz extends JFrame {
 			int columnas = Integer.parseInt(txtFieldColumnas.getText());
 			Celda[][] laberinto = new Celda[filas][columnas];
 			
+			//Wilson.inicializarCeldas(laberinto);
 			Wilson.crearLaberinto(laberinto);
 
 			Formas frame = new Formas(laberinto);
