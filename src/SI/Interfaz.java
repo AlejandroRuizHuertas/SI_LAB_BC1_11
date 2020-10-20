@@ -6,7 +6,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.GridBagLayout;
 import javax.swing.JTextField;
 
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JLabel;
@@ -17,8 +16,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
@@ -167,9 +164,7 @@ public class Interfaz extends JFrame {
 			int columnas = Integer.parseInt(txtFieldColumnas.getText());
 			Celda[][] laberinto = new Celda[filas][columnas];
 			
-			Wilson.inicializarCeldas(laberinto);
-
-			//Wilson.crearLaberinto(laberinto);
+			Wilson.crearLaberinto(laberinto);
 
 			Formas frame = new Formas(laberinto);
 			frame.setVisible(true);

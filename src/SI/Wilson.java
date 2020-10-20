@@ -1,34 +1,29 @@
 package SI;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
-import SI.Celda.Movimientos;
 
 public class Wilson {
 
 	static List<Celda> camino = new ArrayList<Celda>();
 	final Stack<Celda> pila = new Stack<Celda>();
 	private static Celda actual;
-	private final Random random = new Random();
 	final static List<Celda> listaCeldas = new ArrayList<Celda>();
 	
 	
 
 	public static void crearLaberinto(Celda[][] laberinto) {
 		Random random = new Random();
-
 		int filas = laberinto.length;
 		int columnas = laberinto[0].length;
 		inicializarCeldas(laberinto);
 		rellenarLista(laberinto);
-		Celda actual;
 		actual = laberinto[random.nextInt(filas)][random.nextInt(columnas)];
 		actual.setVisitado(true);
 		while (actual.getVisitado()) {
 			actual = laberinto[random.nextInt(filas)][random.nextInt(columnas)];
 		}
-		hacerCamino(actual);
+		hacerCamino(laberinto);
 	}
 
 	private static void rellenarLista(Celda[][] laberinto) {
@@ -54,9 +49,9 @@ public class Wilson {
 	}
 	
 	
-	public static void hacerCamino(Celda actual, Celda) {
-		while
-		Celda proxima = obtenerVecinoNoVisitado(laberinto);
+	public static void hacerCamino(Celda[][] laberinto) {
+		
+		Celda proxima = Celda.obtenerVecinoNoVisitado(listaCeldas,actual, laberinto);
 		actual = proxima;
 	}
 	/*

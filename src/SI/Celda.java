@@ -36,33 +36,24 @@ public class Celda {
 
 	}
 
-	/*public enum Movimientos {
-		Norte(-1, 0), Este(0, 1), Sur(1, 0), Oeste(0, -1);
-
-		private final int fila;
-		private final int columna;
-
-		Movimientos(int x, int y) {
-			this.fila = x;
-			this.columna = y;
-		}
-
-		public int getX() {
-			return fila;
-		}
-
-		public int getY() {
-			return columna;
-		}
-
-		private static final List<Movimientos> VALUES = Collections.unmodifiableList(Arrays.asList(values()));
-		private static final int SIZE = VALUES.size();
-		private static final Random RANDOM = new Random();
-
-		public static Movimientos movimientoRandom() {
-			return VALUES.get(RANDOM.nextInt(SIZE));
-		}
-	}*/
+	/*
+	 * public enum Movimientos { Norte(-1, 0), Este(0, 1), Sur(1, 0), Oeste(0, -1);
+	 * 
+	 * private final int fila; private final int columna;
+	 * 
+	 * Movimientos(int x, int y) { this.fila = x; this.columna = y; }
+	 * 
+	 * public int getX() { return fila; }
+	 * 
+	 * public int getY() { return columna; }
+	 * 
+	 * private static final List<Movimientos> VALUES =
+	 * Collections.unmodifiableList(Arrays.asList(values())); private static final
+	 * int SIZE = VALUES.size(); private static final Random RANDOM = new Random();
+	 * 
+	 * public static Movimientos movimientoRandom() { return
+	 * VALUES.get(RANDOM.nextInt(SIZE)); } }
+	 */
 
 	/*
 	 * Nombre: celdaVecinaAleatoria
@@ -90,7 +81,7 @@ public class Celda {
 	 * 
 	 * Version 1.0
 	 */
-	public Celda comprobarCeldaVecina(List<Celda> listaCeldas, Celda vecino) {
+	public static Celda comprobarCeldaVecina(List<Celda> listaCeldas, Celda vecino) {
 		if (listaCeldas.contains(vecino)) {
 			return listaCeldas.get(listaCeldas.indexOf(vecino));
 		} else {
@@ -106,43 +97,38 @@ public class Celda {
 	 * 
 	 * Version 1.1
 	 */
-	/*public Celda obtenerCeldaSinCamino(List<Celda> listaCeldas, Celda[][] laberinto, Celda actual) {
-
-		List<Celda> listaVecinos = new ArrayList<Celda>(4);
-
-		Celda norte = comprobarCeldaVecina(listaCeldas, laberinto[actual.getFila() - 1][actual.getColumna()]);
-		Celda este = comprobarCeldaVecina(listaCeldas, laberinto[actual.getFila()][actual.getColumna() + 1]);
-		Celda sur = comprobarCeldaVecina(listaCeldas, laberinto[actual.getFila() + 1][actual.getColumna()]);
-		Celda oeste = comprobarCeldaVecina(listaCeldas, laberinto[actual.getFila()][actual.getColumna() - 1]);
-
-		if (norte != null && !norte.getCamino()) {
-			listaVecinos.add(norte);
-		} else if (este != null && !este.getCamino()) {
-			listaVecinos.add(este);
-		} else if (sur != null && !sur.getCamino()) {
-			listaVecinos.add(sur);
-		} else if (oeste != null && !oeste.getCamino()) {
-			listaVecinos.add(oeste);
-		}
-
-		if (listaVecinos.size() == 1) {
-			return listaVecinos.get(0);
-		} else {
-			return celdaVecinaAleatoria(listaVecinos);
-		}
-	}
-*/
+	/*
+	 * public Celda obtenerCeldaSinCamino(List<Celda> listaCeldas, Celda[][]
+	 * laberinto, Celda actual) {
+	 * 
+	 * List<Celda> listaVecinos = new ArrayList<Celda>(4);
+	 * 
+	 * Celda norte = comprobarCeldaVecina(listaCeldas, laberinto[actual.getFila() -
+	 * 1][actual.getColumna()]); Celda este = comprobarCeldaVecina(listaCeldas,
+	 * laberinto[actual.getFila()][actual.getColumna() + 1]); Celda sur =
+	 * comprobarCeldaVecina(listaCeldas, laberinto[actual.getFila() +
+	 * 1][actual.getColumna()]); Celda oeste = comprobarCeldaVecina(listaCeldas,
+	 * laberinto[actual.getFila()][actual.getColumna() - 1]);
+	 * 
+	 * if (norte != null && !norte.getCamino()) { listaVecinos.add(norte); } else if
+	 * (este != null && !este.getCamino()) { listaVecinos.add(este); } else if (sur
+	 * != null && !sur.getCamino()) { listaVecinos.add(sur); } else if (oeste !=
+	 * null && !oeste.getCamino()) { listaVecinos.add(oeste); }
+	 * 
+	 * if (listaVecinos.size() == 1) { return listaVecinos.get(0); } else { return
+	 * celdaVecinaAleatoria(listaVecinos); } }
+	 */
 	/*
 	 * Nombre: obtenerVecinoNoVisitado
 	 * 
 	 * Explicacion: Comprobamos todos los posibles vecinos de la celda actual en la
 	 * que nos encontramos. Si tiene algun vecino que no este visitado, entonces lo
-	 * añade a una lista de vecinos. Si la lista solo tiene un elemento, devolvemos
+	 * aï¿½ade a una lista de vecinos. Si la lista solo tiene un elemento, devolvemos
 	 * ese elemento, si tiene mas de uno, entonces buscara uno aleatorio.
 	 * 
 	 * Version 1.0
 	 */
-	public Celda obtenerListaVecinoNoVisitado(List<Celda> listaCeldas, Celda[][] laberinto, Celda actual) {
+	public static List<Celda> obtenerListaVecinos(List<Celda> listaCeldas, Celda[][] laberinto, Celda actual) {
 		List<Celda> listaVecinos = new ArrayList<Celda>(4);
 
 		Celda norte = comprobarCeldaVecina(listaCeldas, laberinto[actual.getFila() - 1][actual.getColumna()]);
@@ -150,14 +136,14 @@ public class Celda {
 		Celda sur = comprobarCeldaVecina(listaCeldas, laberinto[actual.getFila() + 1][actual.getColumna()]);
 		Celda oeste = comprobarCeldaVecina(listaCeldas, laberinto[actual.getFila()][actual.getColumna() - 1]);
 
-		if (norte != null && !norte.getVisitado()) {
-			listaVecinos.add(norte);
-		} else if (este != null && !este.getVisitado()) {
-			listaVecinos.add(este);
-		} else if (sur != null && !sur.getVisitado()) {
-			listaVecinos.add(sur);
-		} else if (oeste != null && !oeste.getVisitado()) {
-			listaVecinos.add(oeste);
+		if (norte != null) {
+			listaVecinos.add(0, norte);
+		} else if (este != null) {
+			listaVecinos.add(1, este);
+		} else if (sur != null) {
+			listaVecinos.add(2, sur);
+		} else if (oeste != null) {
+			listaVecinos.add(3, oeste);
 		}
 
 		if (listaVecinos.size() == 1) {
@@ -176,9 +162,9 @@ public class Celda {
 	 * 
 	 */
 
-	public Celda obtenerVecinoNoVisitado(List<Celda> listaCeldas) {
+	public static Celda obtenerVecinoNoVisitado(List<Celda> listaCeldas, Celda actual, Celda[][] laberinto) {
 
-		List<Celda> listaVecinos = obtenerListaVecinoNoVisitado(listaCeldas);
+		List<Celda> listaVecinos = obtenerListaVecinos(listaCeldas, laberinto, actual);
 
 		if (listaVecinos.size() == 1) {
 			return listaVecinos.get(0);
