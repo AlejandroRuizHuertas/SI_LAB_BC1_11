@@ -11,13 +11,7 @@ public class Celda {
 	private int fila;
 	private int columna;
 	private int valor;
-
 	// private Celda padres;
-
-	private boolean bucle = false;
-	private boolean camino = false;
-	private boolean visitado = false;
-
 	private boolean excavada;
 	private boolean[] vecinos;
 
@@ -27,9 +21,6 @@ public class Celda {
 		this.valor = 0;
 		this.vecinos = vecinos;
 		this.excavada = false;
-		this.bucle = false;
-		this.visitado = false;
-		this.camino = false;
 	}
 
 	public Celda(int fila, int columna) {
@@ -64,11 +55,11 @@ public class Celda {
 	 * 
 	 * Version 1.1
 	 */
-	public Celda celdaVecinaAleatoria(List<Celda> listaVecinos) {
+	public static Celda celdaVecinaAleatoria(List<Celda> listaVecinos) {
 		Random random = new Random();
 		Celda celda = listaVecinos.get(random.nextInt(listaVecinos.size()));
-		celda.setVisitado(true);
 		return celda;
+
 	}
 
 	/*
@@ -81,10 +72,13 @@ public class Celda {
 	 * 
 	 * Version 1.0
 	 */
-	public static Celda comprobarCeldaVecina(List<Celda> listaCeldas, Celda vecino) {
-		if (listaCeldas.contains(vecino)) {
-			return listaCeldas.get(listaCeldas.indexOf(vecino));
-		} else {
+	public static Celda comprobarCeldaVecina(int desplazamientoFila, int desplazamientoColumna, Celda[][] laberinto,
+			Celda actual) {
+		Celda vecino = null;
+		try {
+			vecino = laberinto[actual.getFila() + desplazamientoFila][actual.getColumna() + desplazamientoColumna];
+			return vecino;
+		} catch (Exception ArrayIndexOutOfBoundsException) {
 			return null;
 		}
 	}
@@ -128,31 +122,53 @@ public class Celda {
 	 * 
 	 * Version 1.0
 	 */
-	public static List<Celda> obtenerListaVecinos(List<Celda> listaCeldas, Celda[][] laberinto, Celda actual) {
-		List<Celda> listaVecinos = new ArrayList<Celda>(4);
+	public static List<Celda> obtenerListaVecinos(Celda[][] laberinto, Celda actual) {
+		List<Celda> listaVecinos = new ArrayList<Celda>();
 
-		Celda norte = comprobarCeldaVecina(listaCeldas, laberinto[actual.getFila() - 1][actual.getColumna()]);
-		Celda este = comprobarCeldaVecina(listaCeldas, laberinto[actual.getFila()][actual.getColumna() + 1]);
-		Celda sur = comprobarCeldaVecina(listaCeldas, laberinto[actual.getFila() + 1][actual.getColumna()]);
-		Celda oeste = comprobarCeldaVecina(listaCeldas, laberinto[actual.getFila()][actual.getColumna() - 1]);
+		Celda norte = comprobarCeldaVecina(-1, 0, laberinto, actual);
+		Celda este = comprobarCeldaVecina(0, 1, laberinto, actual);
+		Celda sur = comprobarCeldaVecina(1, 0, laberinto, actual);
+		Celda oeste = comprobarCeldaVecina(0, -1, laberinto, actual);
 
 		if (norte != null) {
-			listaVecinos.add(0, norte);
-		} else if (este != null) {
-			listaVecinos.add(1, este);
-		} else if (sur != null) {
-			listaVecinos.add(2, sur);
-		} else if (oeste != null) {
-			listaVecinos.add(3, oeste);
+			listaVecinos.add(norte);
+		}
+		if (este != null) {
+			listaVecinos.add(este);
+		}
+		if (sur != null) {
+			listaVecinos.add(sur);
+		}
+		if (oeste != null) {
+			listaVecinos.add(oeste);
 		}
 
-		if (listaVecinos.size() == 1) {
-			return listaVecinos.get(0);
-		} else {
-			return celdaVecinaAleatoria(listaVecinos);
-		}
+		return listaVecinos;
+
 	}
 
+	public void removeWalls(Celda next) {
+		int x = this.fila - next.getFila();
+		// top 0, right 1, bottom 2, left 3
+
+		if (x == 1) {
+			vecinos[3] = false;
+			next.vecinos[1] = false;
+		} else if (x == -1) {
+			vecinos[1] = false;
+			next.vecinos[3] = false;
+		}
+
+		int y = this.columna - next.getColumna();
+
+		if (y == 1) {
+			vecinos[0] = false;
+			next.vecinos[2] = false;
+		} else if (y == -1) {
+			vecinos[2] = false;
+			next.vecinos[0] = false;
+		}
+	}
 	/*
 	 * Nombre: obtenerVecinoNoVisitado
 	 * 
@@ -162,24 +178,13 @@ public class Celda {
 	 * 
 	 */
 
-	public static Celda obtenerVecinoNoVisitado(List<Celda> listaCeldas, Celda actual, Celda[][] laberinto) {
+	public static Celda obtenerVecinoAleatorio(Celda actual, Celda[][] laberinto) {
 
-		List<Celda> listaVecinos = obtenerListaVecinos(listaCeldas, laberinto, actual);
+		List<Celda> Vecinos = obtenerListaVecinos(laberinto, actual);
 
-		if (listaVecinos.size() == 1) {
-			return listaVecinos.get(0);
-		} else {
-			return celdaVecinaAleatoria(listaVecinos);
-		}
-	}
+		Celda aleatoria = celdaVecinaAleatoria(Vecinos);
+		return aleatoria;
 
-	public void eliminarPared(Celda proxima) {
-		int x = this.x - proxima.x;
-
-		if (x == 1) {
-			paredes[3] = false;
-			proxima.paredes[1] = false;
-		}
 	}
 
 	public int getFila() {
@@ -220,22 +225,6 @@ public class Celda {
 
 	public void setVecinos(boolean[] vecinos) {
 		this.vecinos = vecinos;
-	}
-
-	public boolean getVisitado() {
-		return visitado;
-	}
-
-	public void setVisitado(boolean visitado) {
-		this.visitado = visitado;
-	}
-
-	public boolean getCamino() {
-		return camino;
-	}
-
-	public void setCamino(boolean camino) {
-		this.camino = camino;
 	}
 
 }

@@ -2,37 +2,39 @@ package SI;
 
 import java.util.*;
 
-
 public class Wilson {
 
 	static List<Celda> camino = new ArrayList<Celda>();
-	final Stack<Celda> pila = new Stack<Celda>();
-	private static Celda actual;
+
 	final static List<Celda> listaCeldas = new ArrayList<Celda>();
-	
-	
 
 	public static void crearLaberinto(Celda[][] laberinto) {
+		Celda actual;
 		Random random = new Random();
 		int filas = laberinto.length;
 		int columnas = laberinto[0].length;
 		inicializarCeldas(laberinto);
-		rellenarLista(laberinto);
 		actual = laberinto[random.nextInt(filas)][random.nextInt(columnas)];
-		actual.setVisitado(true);
-		while (actual.getVisitado()) {
-			actual = laberinto[random.nextInt(filas)][random.nextInt(columnas)];
+		actual.setExcavada(true);
+
+		while (!laberintoExcavado(laberinto)) {
+			while (actual.isExcavada()) {
+				actual = laberinto[random.nextInt(filas)][random.nextInt(columnas)];
+			}
+			hacerCamino(laberinto, actual);
+			
 		}
-		hacerCamino(laberinto);
 	}
 
-	private static void rellenarLista(Celda[][] laberinto) {
-
+	private static boolean laberintoExcavado(Celda[][] laberinto) {
 		for (int i = 0; i < laberinto.length; i++) {
 			for (int j = 0; j < laberinto[0].length; j++) {
-				listaCeldas.add(laberinto[i][j]);
+				if (!laberinto[i][j].isExcavada()) {
+					return false;
+				}
 			}
 		}
+		return true;
 	}
 
 	/*
@@ -43,16 +45,41 @@ public class Wilson {
 	 * 
 	 * Version: 1.2
 	 */
-	public static void excavar() {
-		
+	public static void excavar(Stack<Celda> pila) {
+		Celda a = null;
+		Celda b = null;
+		while (!pila.isEmpty()) {
+			a = pila.pop();
+			try {
+				b = pila.peek();
+			} catch (Exception EmptyStackException) {
+
+			}
+			a.setExcavada(true);
+			a.removeWalls(b);
+
+		}
 		
 	}
-	
-	
-	public static void hacerCamino(Celda[][] laberinto) {
-		
-		Celda proxima = Celda.obtenerVecinoNoVisitado(listaCeldas,actual, laberinto);
-		actual = proxima;
+
+	public static void hacerCamino(Celda[][] laberinto, Celda actual) {
+		Stack<Celda> pila = new Stack<Celda>();
+		pila.push(actual);
+		while (!actual.isExcavada()) {
+			Celda nueva = Celda.obtenerVecinoAleatorio(actual, laberinto);
+			if (pila.contains(nueva)) {
+				while (pila.pop().equals(nueva)) {
+				}
+			} else {
+				pila.push(nueva);
+			}
+			actual = nueva;
+		}
+		for (Celda c : pila) {
+			System.out.println(c.getFila() + " " + c.getColumna());
+		}
+		System.out.println(pila.toString());
+		excavar(pila);
 	}
 	/*
 	 * if (actual.getVisitado()) { añadirAlCamino();
@@ -68,7 +95,6 @@ public class Wilson {
 	 * actual = proxima; } else if (!pila.isEmpty()) { actual = pila.pop(); } }
 	 */
 
-	
 	/*
 	 * Nombre: inicializarCelda
 	 * 
@@ -101,7 +127,6 @@ public class Wilson {
 		}
 
 	}
-
 
 	/*
 	 * public Celda obtenerVecinoNoExcavado(List<Celda> arrayCeldas) { List<Celda>
