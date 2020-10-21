@@ -1,6 +1,11 @@
 package SI;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 
@@ -52,7 +57,12 @@ public class Wilson {
 		Gson gson = new Gson();
 		Wilson solucion = new Wilson(filas, columnas, 4, mov, id_mov, cells);
 		String j = gson.toJson(solucion);
-		System.out.println(j);
+		try (BufferedWriter bw = new BufferedWriter(new FileWriter("laberinto"+filas+"x"+columnas+".json"))) {
+			bw.write(j);
+			System.out.println("Fichero creado");
+		} catch (IOException ex) {
+			Logger.getLogger(Wilson.class.getName()).log(Level.SEVERE, null, ex);
+		}
 
 	}
 
@@ -81,13 +91,13 @@ public class Wilson {
 		while (!pila.isEmpty()) {
 			a = pila.pop();
 			try {
-				b = (Celda)pila.peek();
+				b = (Celda) pila.peek();
 
 			} catch (Exception EmptyStackException) {
 
 			}
 			a.setExcavada(true);
-			
+
 			a.removeWalls(b);
 
 		}

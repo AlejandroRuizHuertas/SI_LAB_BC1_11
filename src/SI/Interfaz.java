@@ -3,6 +3,11 @@ package SI;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
+
 import java.awt.GridBagLayout;
 import javax.swing.JTextField;
 
@@ -15,7 +20,10 @@ import javax.swing.JFileChooser;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
@@ -148,11 +156,25 @@ public class Interfaz extends JFrame {
 	private class BtnLeerActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			JFileChooser fileChooser = new JFileChooser();
+			Gson gson = new Gson();
 			int seleccion = fileChooser.showOpenDialog(contentPane);
 			if (seleccion == JFileChooser.APPROVE_OPTION)
 			{
 			   File fichero = fileChooser.getSelectedFile();
 			   // Aquí debemos abrir y leer el fichero.
+			   String path = fichero.getPath();
+			   BufferedReader br;
+			try {
+				br = new BufferedReader(new FileReader(path));
+				Wilson leido = gson.fromJson(br, Wilson.class);
+				Formas frame = new Formas(leido.cells);
+				frame.setVisible(true);
+				
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
 			   
 			}
 		}
@@ -164,7 +186,6 @@ public class Interfaz extends JFrame {
 			int columnas = Integer.parseInt(txtFieldColumnas.getText());
 			Celda[][] laberinto = new Celda[filas][columnas];
 			
-			//Wilson.inicializarCeldas(laberinto);
 			Wilson.crearLaberinto(laberinto);
 
 			Formas frame = new Formas(laberinto);
