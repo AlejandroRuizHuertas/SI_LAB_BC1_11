@@ -147,28 +147,29 @@ public class Celda {
 
 	}
 
-	public void removeWalls(Celda next) {
-		int x = this.fila - next.getFila();
-		// top 0, right 1, bottom 2, left 3
+	
+ 	public void removeWalls(Celda next) {
+	int x = this.fila - next.getFila();
+	// top 0, right 1, bottom 2, left 3
 
-		if (x == 1) {
-			vecinos[3] = false;
-			next.vecinos[1] = false;
-		} else if (x == -1) {
-			vecinos[1] = false;
-			next.vecinos[3] = false;
-		}
-
-		int y = this.columna - next.getColumna();
-
-		if (y == 1) {
-			vecinos[0] = false;
-			next.vecinos[2] = false;
-		} else if (y == -1) {
-			vecinos[2] = false;
-			next.vecinos[0] = false;
-		}
+	if (x == 1) {
+		vecinos[3] = false;
+		next.vecinos[1] = false;
+	} else if (x == -1) {
+		vecinos[1] = false;
+		next.vecinos[3] = false;
 	}
+
+	int y = this.columna - next.getColumna();
+
+	if (y == 1) {
+		vecinos[0] = false;
+		next.vecinos[2] = false;
+	} else if (y == -1) {
+		vecinos[2] = false;
+		next.vecinos[0] = false;
+	}
+}
 	/*
 	 * Nombre: obtenerVecinoNoVisitado
 	 * 
