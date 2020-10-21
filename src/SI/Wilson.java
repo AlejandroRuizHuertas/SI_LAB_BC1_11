@@ -5,7 +5,7 @@ import java.util.*;
 import com.google.gson.Gson;
 
 public class Wilson {
-	
+
 	int rows;
 	int cols;
 	int max_n;
@@ -16,13 +16,18 @@ public class Wilson {
 	static List<Celda> camino = new ArrayList<Celda>();
 
 	final static List<Celda> listaCeldas = new ArrayList<Celda>();
-	
-	public Wilson
+
+	public Wilson(int rows, int cols, int max_n, int[][] mov, String[] id_mov, Celda[][] cells) {
+		this.rows = rows;
+		this.cols = cols;
+		this.max_n = max_n;
+		this.mov = mov;
+		this.id_mov = id_mov;
+		this.cells = cells;
+	}
 
 	public static void crearLaberinto(Celda[][] laberinto) {
 		Celda actual;
-		int mov[][] = { { -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 } };
-		String[] id_mov = { "N", "E", "S", "O" };
 		Random random = new Random();
 		int filas = laberinto.length;
 		int columnas = laberinto[0].length;
@@ -37,21 +42,17 @@ public class Wilson {
 			hacerCamino(laberinto, actual);
 
 		}
-		generarJson(filas, columnas, mov, id_mov, laberinto);
 
 	}
 
-	private static void generarJson(int filas, int columnas, int[][] mov, String[] id_mov, Celda[][] cells) {
+	public static void generarJson(Celda[][] cells) {
+		int mov[][] = { { -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 } };
+		String[] id_mov = { "N", "E", "S", "O" };
+		int filas = cells.length;
+		int columnas = cells[0].length;
 		Gson gson = new Gson();
-		gson.toJson(cells);
-		Collection collection = new ArrayList();
-		collection.add(filas);
-		collection.add(columnas);
-		collection.add(4);
-		collection.add(mov);
-		collection.add(id_mov);
-		collection.add(cells);
-		String j = gson.toJson(collection);
+		Wilson solucion = new Wilson(filas, columnas, 4, mov, id_mov, cells);
+		String j = gson.toJson(solucion);
 		System.out.println(j);
 
 	}
@@ -105,25 +106,9 @@ public class Wilson {
 			}
 			actual = nueva;
 		}
-		for (Celda c : pila) {
-			System.out.println(c.getFila() + " " + c.getColumna());
-		}
-		System.out.println(pila.toString());
+
 		excavar(pila);
 	}
-	/*
-	 * if (actual.getVisitado()) { añadirAlCamino();
-	 * 
-	 * List<Celda> noCamino = arrayCeldas.parallelStream().filter(c ->
-	 * !c.getVisitado()) .collect(Collectors.toList()); if (!noCamino.isEmpty()) {
-	 * actual = noCamino.get(random.nextInt(noCamino.size())); } }
-	 * 
-	 * actual.setCamino(true); Celda proxima =
-	 * actual.obtenerCeldaSinCamino(arrayCeldas);
-	 * 
-	 * if (proxima != null) { pila.push(actual); actual.eliminarPared(proxima);
-	 * actual = proxima; } else if (!pila.isEmpty()) { actual = pila.pop(); } }
-	 */
 
 	/*
 	 * Nombre: inicializarCelda
@@ -157,24 +142,5 @@ public class Wilson {
 		}
 
 	}
-
-	/*
-	 * public Celda obtenerVecinoNoExcavado(List<Celda> arrayCeldas) { List<Celda>
-	 * listaVecinos = new ArrayList<Celda>(4);
-	 * 
-	 * Celda norte = comprobarCeldaVecina(arrayCeldas, new Celda(filas, columnas -
-	 * 1)); Celda este = comprobarCeldaVecina(arrayCeldas, new Celda(filas + 1,
-	 * columnas)); Celda sur = comprobarCeldaVecina(arrayCeldas, new Celda(filas,
-	 * columnas + 1)); Celda oeste = comprobarCeldaVecina(arrayCeldas, new
-	 * Celda(filas - 1, columnas));
-	 * 
-	 * if (norte != null && !norte.isExcavada()) { listaVecinos.add(norte); } else
-	 * if (este != null && !este.isExcavada()) { listaVecinos.add(este); } else if
-	 * (sur != null && !sur.isExcavada()) { listaVecinos.add(sur); } else if (oeste
-	 * != null && oeste.isExcavada()) { listaVecinos.add(oeste); }
-	 * 
-	 * if (listaVecinos.size() == 1) { return listaVecinos.get(0); } else { return
-	 * celdaVecinaAleatoria(listaVecinos); } }
-	 */
 
 }

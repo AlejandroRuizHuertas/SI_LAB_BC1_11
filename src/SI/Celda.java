@@ -11,7 +11,6 @@ public class Celda {
 	private int fila;
 	private int columna;
 	private int value;
-	// private Celda padres;
 	private boolean excavada;
 	private boolean[] neighbors;
 
@@ -23,35 +22,6 @@ public class Celda {
 		this.excavada = false;
 	}
 
-	public Celda(int fila, int columna) {
-
-	}
-
-	/*
-	 * public enum Movimientos { Norte(-1, 0), Este(0, 1), Sur(1, 0), Oeste(0, -1);
-	 * 
-	 * private final int fila; private final int columna;
-	 * 
-	 * Movimientos(int x, int y) { this.fila = x; this.columna = y; }
-	 * 
-	 * public int getX() { return fila; }
-	 * 
-	 * public int getY() { return columna; }
-	 * 
-	 * private static final List<Movimientos> VALUES =
-	 * Collections.unmodifiableList(Arrays.asList(values())); private static final
-	 * int SIZE = VALUES.size(); private static final Random RANDOM = new Random();
-	 * 
-	 * public static Movimientos movimientoRandom() { return
-	 * VALUES.get(RANDOM.nextInt(SIZE)); } }
-	 */
-
-	
-
-	@Override
-	public String toString() {
-		return ;
-	}
 
 	/*
 	 * Nombre: celdaVecinaAleatoria
@@ -90,37 +60,9 @@ public class Celda {
 		}
 	}
 
+
 	/*
-	 * Nombre: obtenerCeldaSinCamino
-	 * 
-	 * Explicacion: Obtiene una celda que no este dentro del camino para evitar los
-	 * bucles.
-	 * 
-	 * Version 1.1
-	 */
-	/*
-	 * public Celda obtenerCeldaSinCamino(List<Celda> listaCeldas, Celda[][]
-	 * laberinto, Celda actual) {
-	 * 
-	 * List<Celda> listaneighbors = new ArrayList<Celda>(4);
-	 * 
-	 * Celda norte = comprobarCeldaVecina(listaCeldas, laberinto[actual.getFila() -
-	 * 1][actual.getColumna()]); Celda este = comprobarCeldaVecina(listaCeldas,
-	 * laberinto[actual.getFila()][actual.getColumna() + 1]); Celda sur =
-	 * comprobarCeldaVecina(listaCeldas, laberinto[actual.getFila() +
-	 * 1][actual.getColumna()]); Celda oeste = comprobarCeldaVecina(listaCeldas,
-	 * laberinto[actual.getFila()][actual.getColumna() - 1]);
-	 * 
-	 * if (norte != null && !norte.getCamino()) { listaneighbors.add(norte); } else if
-	 * (este != null && !este.getCamino()) { listaneighbors.add(este); } else if (sur
-	 * != null && !sur.getCamino()) { listaneighbors.add(sur); } else if (oeste !=
-	 * null && !oeste.getCamino()) { listaneighbors.add(oeste); }
-	 * 
-	 * if (listaneighbors.size() == 1) { return listaneighbors.get(0); } else { return
-	 * celdaVecinaAleatoria(listaneighbors); } }
-	 */
-	/*
-	 * Nombre: obtenerVecinoNoVisitado
+	 * Nombre: obtenerListaneighbors
 	 * 
 	 * Explicacion: Comprobamos todos los posibles neighbors de la celda actual en la
 	 * que nos encontramos. Si tiene algun vecino que no este visitado, entonces lo
@@ -177,7 +119,7 @@ public class Celda {
 		}
 	}
 	/*
-	 * Nombre: obtenerVecinoNoVisitado
+	 * Nombre: obtenerVecinoAleatorio
 	 * 
 	 * Explicacion: Obtiene una celda vecina no visitada previamente
 	 * 

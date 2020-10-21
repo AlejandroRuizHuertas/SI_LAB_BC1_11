@@ -25,21 +25,6 @@ public class Formas extends JFrame {
 	private Graphics2D g2d;
 	private BufferedImage bufferedImage;
 
-	/*
-	 * public static void main(String[] args) { Celda[][] laberinto = new
-	 * Celda[8][8];
-	 * 
-	 * for (int i = 0; i < laberinto.length; i++) { for (int j = 0; j <
-	 * laberinto[0].length; j++) {
-	 * 
-	 * Celda c = new Celda(i, j);
-	 * 
-	 * laberinto[i][j] = c; } }
-	 * 
-	 * Formas frame = new Formas(laberinto); frame.setVisible(true);
-	 * 
-	 * }
-	 */
 
 	/**
 	 * Create the frame.
@@ -159,7 +144,7 @@ public class Formas extends JFrame {
 			File file = new File("milaberinto.png");
 			try {
 				ImageIO.write(bufferedImage, "png", file);
-				
+				Wilson.generarJson(laberinto);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
