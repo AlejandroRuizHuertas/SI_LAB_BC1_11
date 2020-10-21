@@ -95,7 +95,7 @@ public class Formas extends JFrame {
 		g.setColor(Color.black);
 		g2d.setColor(Color.black);
 		// Si tiene pared al norte
-		if (!c.getVecinos()[0]) {
+		if (!c.getneighbors()[0]) {
 			x1 = inicio + c.getColumna() * grosor;
 			y1 = inicio + c.getFila() * grosor;
 			x2 = x1 + grosor;
@@ -106,7 +106,7 @@ public class Formas extends JFrame {
 			g2d.drawLine(x1, y1, x2, y2);
 		}
 		// Si tiene pared al este
-		if (!c.getVecinos()[1]) {
+		if (!c.getneighbors()[1]) {
 			x1 = inicio + grosor + c.getColumna() * grosor;
 			y1 = inicio + c.getFila() * grosor;
 			x2 = x1;
@@ -116,7 +116,7 @@ public class Formas extends JFrame {
 			g2d.drawLine(x1, y1, x2, y2);
 		}
 		// Si tiene pared al sur
-		if (!c.getVecinos()[2]) {
+		if (!c.getneighbors()[2]) {
 			x1 = inicio + c.getColumna() * grosor;
 			y1 = inicio + grosor + c.getFila() * grosor;
 			x2 = x1 + grosor;
@@ -127,7 +127,7 @@ public class Formas extends JFrame {
 			g2d.drawLine(x1, y1, x2, y2);
 		}
 		// Si tiene pared al oeste
-		if (!c.getVecinos()[3]) {
+		if (!c.getneighbors()[3]) {
 			x1 = inicio + c.getColumna() * grosor;
 			y1 = inicio + c.getFila() * grosor;
 			x2 = x1;
@@ -159,6 +159,7 @@ public class Formas extends JFrame {
 			File file = new File("milaberinto.png");
 			try {
 				ImageIO.write(bufferedImage, "png", file);
+				
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

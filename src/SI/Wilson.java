@@ -2,14 +2,27 @@ package SI;
 
 import java.util.*;
 
+import com.google.gson.Gson;
+
 public class Wilson {
+	
+	int rows;
+	int cols;
+	int max_n;
+	int mov[][];
+	String[] id_mov;
+	Celda[][] cells;
 
 	static List<Celda> camino = new ArrayList<Celda>();
 
 	final static List<Celda> listaCeldas = new ArrayList<Celda>();
+	
+	public Wilson
 
 	public static void crearLaberinto(Celda[][] laberinto) {
 		Celda actual;
+		int mov[][] = { { -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 } };
+		String[] id_mov = { "N", "E", "S", "O" };
 		Random random = new Random();
 		int filas = laberinto.length;
 		int columnas = laberinto[0].length;
@@ -22,8 +35,25 @@ public class Wilson {
 				actual = laberinto[random.nextInt(filas)][random.nextInt(columnas)];
 			}
 			hacerCamino(laberinto, actual);
-			
+
 		}
+		generarJson(filas, columnas, mov, id_mov, laberinto);
+
+	}
+
+	private static void generarJson(int filas, int columnas, int[][] mov, String[] id_mov, Celda[][] cells) {
+		Gson gson = new Gson();
+		gson.toJson(cells);
+		Collection collection = new ArrayList();
+		collection.add(filas);
+		collection.add(columnas);
+		collection.add(4);
+		collection.add(mov);
+		collection.add(id_mov);
+		collection.add(cells);
+		String j = gson.toJson(collection);
+		System.out.println(j);
+
 	}
 
 	private static boolean laberintoExcavado(Celda[][] laberinto) {
@@ -59,7 +89,7 @@ public class Wilson {
 			a.removeWalls(b);
 
 		}
-		
+
 	}
 
 	public static void hacerCamino(Celda[][] laberinto, Celda actual) {

@@ -10,16 +10,16 @@ public class Celda {
 
 	private int fila;
 	private int columna;
-	private int valor;
+	private int value;
 	// private Celda padres;
 	private boolean excavada;
-	private boolean[] vecinos;
+	private boolean[] neighbors;
 
-	public Celda(int fila, int columna, boolean[] vecinos) {
+	public Celda(int fila, int columna, boolean[] neighbors) {
 		this.fila = fila;
 		this.columna = columna;
-		this.valor = 0;
-		this.vecinos = vecinos;
+		this.value = 0;
+		this.neighbors = neighbors;
 		this.excavada = false;
 	}
 
@@ -46,18 +46,25 @@ public class Celda {
 	 * VALUES.get(RANDOM.nextInt(SIZE)); } }
 	 */
 
+	
+
+	@Override
+	public String toString() {
+		return ;
+	}
+
 	/*
 	 * Nombre: celdaVecinaAleatoria
 	 * 
-	 * Explicacion: Escoje una celda aleatoria de los vecinos posibles que se
+	 * Explicacion: Escoje una celda aleatoria de los neighbors posibles que se
 	 * convertira en el proximo paso del laberinto. Esa celda que escojamos la
 	 * ponemos como visitada.
 	 * 
 	 * Version 1.1
 	 */
-	public static Celda celdaVecinaAleatoria(List<Celda> listaVecinos) {
+	public static Celda celdaVecinaAleatoria(List<Celda> listaneighbors) {
 		Random random = new Random();
-		Celda celda = listaVecinos.get(random.nextInt(listaVecinos.size()));
+		Celda celda = listaneighbors.get(random.nextInt(listaneighbors.size()));
 		return celda;
 
 	}
@@ -95,7 +102,7 @@ public class Celda {
 	 * public Celda obtenerCeldaSinCamino(List<Celda> listaCeldas, Celda[][]
 	 * laberinto, Celda actual) {
 	 * 
-	 * List<Celda> listaVecinos = new ArrayList<Celda>(4);
+	 * List<Celda> listaneighbors = new ArrayList<Celda>(4);
 	 * 
 	 * Celda norte = comprobarCeldaVecina(listaCeldas, laberinto[actual.getFila() -
 	 * 1][actual.getColumna()]); Celda este = comprobarCeldaVecina(listaCeldas,
@@ -104,26 +111,26 @@ public class Celda {
 	 * 1][actual.getColumna()]); Celda oeste = comprobarCeldaVecina(listaCeldas,
 	 * laberinto[actual.getFila()][actual.getColumna() - 1]);
 	 * 
-	 * if (norte != null && !norte.getCamino()) { listaVecinos.add(norte); } else if
-	 * (este != null && !este.getCamino()) { listaVecinos.add(este); } else if (sur
-	 * != null && !sur.getCamino()) { listaVecinos.add(sur); } else if (oeste !=
-	 * null && !oeste.getCamino()) { listaVecinos.add(oeste); }
+	 * if (norte != null && !norte.getCamino()) { listaneighbors.add(norte); } else if
+	 * (este != null && !este.getCamino()) { listaneighbors.add(este); } else if (sur
+	 * != null && !sur.getCamino()) { listaneighbors.add(sur); } else if (oeste !=
+	 * null && !oeste.getCamino()) { listaneighbors.add(oeste); }
 	 * 
-	 * if (listaVecinos.size() == 1) { return listaVecinos.get(0); } else { return
-	 * celdaVecinaAleatoria(listaVecinos); } }
+	 * if (listaneighbors.size() == 1) { return listaneighbors.get(0); } else { return
+	 * celdaVecinaAleatoria(listaneighbors); } }
 	 */
 	/*
 	 * Nombre: obtenerVecinoNoVisitado
 	 * 
-	 * Explicacion: Comprobamos todos los posibles vecinos de la celda actual en la
+	 * Explicacion: Comprobamos todos los posibles neighbors de la celda actual en la
 	 * que nos encontramos. Si tiene algun vecino que no este visitado, entonces lo
-	 * a�ade a una lista de vecinos. Si la lista solo tiene un elemento, devolvemos
-	 * ese elemento, si tiene mas de uno, entonces buscara uno aleatorio.
+	 * a�ade a una lista de neighbors. Si la lista solo tiene un elemento,
+	 * devolvemos ese elemento, si tiene mas de uno, entonces buscara uno aleatorio.
 	 * 
 	 * Version 1.0
 	 */
-	public static List<Celda> obtenerListaVecinos(Celda[][] laberinto, Celda actual) {
-		List<Celda> listaVecinos = new ArrayList<Celda>();
+	public static List<Celda> obtenerListaneighbors(Celda[][] laberinto, Celda actual) {
+		List<Celda> listaneighbors = new ArrayList<Celda>();
 
 		Celda norte = comprobarCeldaVecina(-1, 0, laberinto, actual);
 		Celda este = comprobarCeldaVecina(0, 1, laberinto, actual);
@@ -131,19 +138,19 @@ public class Celda {
 		Celda oeste = comprobarCeldaVecina(0, -1, laberinto, actual);
 
 		if (norte != null) {
-			listaVecinos.add(norte);
+			listaneighbors.add(norte);
 		}
 		if (este != null) {
-			listaVecinos.add(este);
+			listaneighbors.add(este);
 		}
 		if (sur != null) {
-			listaVecinos.add(sur);
+			listaneighbors.add(sur);
 		}
 		if (oeste != null) {
-			listaVecinos.add(oeste);
+			listaneighbors.add(oeste);
 		}
 
-		return listaVecinos;
+		return listaneighbors;
 
 	}
 
@@ -152,21 +159,21 @@ public class Celda {
 		// top 0, right 1, bottom 2, left 3
 
 		if (x == 1) {
-			vecinos[3] = false;
-			next.vecinos[1] = false;
+			neighbors[3] = false;
+			next.neighbors[1] = false;
 		} else if (x == -1) {
-			vecinos[1] = false;
-			next.vecinos[3] = false;
+			neighbors[1] = false;
+			next.neighbors[3] = false;
 		}
 
 		int y = this.columna - next.getColumna();
 
 		if (y == 1) {
-			vecinos[0] = false;
-			next.vecinos[2] = false;
+			neighbors[0] = false;
+			next.neighbors[2] = false;
 		} else if (y == -1) {
-			vecinos[2] = false;
-			next.vecinos[0] = false;
+			neighbors[2] = false;
+			next.neighbors[0] = false;
 		}
 	}
 	/*
@@ -180,9 +187,9 @@ public class Celda {
 
 	public static Celda obtenerVecinoAleatorio(Celda actual, Celda[][] laberinto) {
 
-		List<Celda> Vecinos = obtenerListaVecinos(laberinto, actual);
+		List<Celda> neighbors = obtenerListaneighbors(laberinto, actual);
 
-		Celda aleatoria = celdaVecinaAleatoria(Vecinos);
+		Celda aleatoria = celdaVecinaAleatoria(neighbors);
 		return aleatoria;
 
 	}
@@ -203,12 +210,12 @@ public class Celda {
 		this.columna = columna;
 	}
 
-	public int getValor() {
-		return valor;
+	public int getvalue() {
+		return value;
 	}
 
-	public void setValor(int valor) {
-		this.valor = valor;
+	public void setvalue(int value) {
+		this.value = value;
 	}
 
 	public boolean isExcavada() {
@@ -219,12 +226,12 @@ public class Celda {
 		this.excavada = excavada;
 	}
 
-	public boolean[] getVecinos() {
-		return vecinos;
+	public boolean[] getneighbors() {
+		return neighbors;
 	}
 
-	public void setVecinos(boolean[] vecinos) {
-		this.vecinos = vecinos;
+	public void setneighbors(boolean[] neighbors) {
+		this.neighbors = neighbors;
 	}
 
 }
