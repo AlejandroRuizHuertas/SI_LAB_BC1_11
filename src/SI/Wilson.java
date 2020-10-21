@@ -34,8 +34,6 @@ public class Wilson {
 		inicializarCeldas(laberinto);
 		actual = laberinto[random.nextInt(filas)][random.nextInt(columnas)];
 		actual.setExcavada(true);
-		System.out.println(actual.getFila() + " " + actual.getColumna());
-		System.out.println();
 		while (!laberintoExcavado(laberinto)) {
 			while (actual.isExcavada()) {
 				actual = laberinto[random.nextInt(filas)][random.nextInt(columnas)];
@@ -80,7 +78,6 @@ public class Wilson {
 	public static void excavar(Stack<Celda> pila) {
 		Celda a = null;
 		Celda b = null;
-		System.out.println(pila.size());
 		while (!pila.isEmpty()) {
 			a = pila.pop();
 			try {
