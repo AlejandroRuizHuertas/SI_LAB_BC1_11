@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
@@ -160,11 +161,12 @@ public class Interfaz extends JFrame {
 			int seleccion = fileChooser.showOpenDialog(contentPane);
 			if (seleccion == JFileChooser.APPROVE_OPTION)
 			{
+				try {
 			   File fichero = fileChooser.getSelectedFile();
 			   // Aquí debemos abrir y leer el fichero.
 			   String path = fichero.getPath();
 			   BufferedReader br;
-			try {
+			
 				br = new BufferedReader(new FileReader(path));
 				Wilson leido = gson.fromJson(br, Wilson.class);
 				Formas frame = new Formas(leido.cells);
@@ -173,6 +175,9 @@ public class Interfaz extends JFrame {
 			} catch (FileNotFoundException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
+			}
+			catch(Exception e2) {
+				JOptionPane.showMessageDialog(contentPane, "Fichero no válido.");
 			}
 			
 			   
