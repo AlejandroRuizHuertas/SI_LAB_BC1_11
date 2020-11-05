@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JSplitPane;
 
 public class Formas extends JFrame {
 
@@ -34,10 +35,19 @@ public class Formas extends JFrame {
 		this.laberinto = lab;
 		this.setBounds(0, 0, 400, 400);
 		this.setLocationRelativeTo(null);
-
-		JButton btnGuardar = new JButton("Guardar");
+		
+		JSplitPane splitPane = new JSplitPane();
+		splitPane.setEnabled(false);
+		getContentPane().add(splitPane, BorderLayout.SOUTH);
+		
+		JButton btnGuardar = new JButton("Guardar laberinto");
 		btnGuardar.addActionListener(new BtnGuardarActionListener());
-		getContentPane().add(btnGuardar, BorderLayout.SOUTH);
+		splitPane.setLeftComponent(btnGuardar);
+		
+		JButton btnResolver = new JButton("Resolver");
+		btnResolver.addActionListener(new BtnResolverActionListener());
+		splitPane.setRightComponent(btnResolver);
+	
 
 	}
 
@@ -137,7 +147,6 @@ public class Formas extends JFrame {
 		g2d.setColor(color);
 		g2d.fillRect(x1, y1, grosor, grosor);
 	}
-
 	private class BtnGuardarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			g2d.dispose();
@@ -149,6 +158,12 @@ public class Formas extends JFrame {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+		}
+	}
+	
+	private class BtnResolverActionListener implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("Ale, resuelto");
 		}
 	}
 }

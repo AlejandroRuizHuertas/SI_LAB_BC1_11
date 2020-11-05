@@ -17,7 +17,6 @@ public class Wilson {
 	int mov[][];
 	String[] id_mov;
 	Celda[][] cells;
-
 	static List<Celda> camino = new ArrayList<Celda>();
 
 	final static List<Celda> listaCeldas = new ArrayList<Celda>();
@@ -56,7 +55,9 @@ public class Wilson {
 		int columnas = cells[0].length;
 		Gson gson = new Gson();
 		Wilson solucion = new Wilson(filas, columnas, 4, mov, id_mov, cells);
+		
 		String j = gson.toJson(solucion);
+		System.out.println(j.toString());
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter("laberinto"+filas+"x"+columnas+".json"))) {
 			bw.write(j);
 			System.out.println("Fichero creado");
