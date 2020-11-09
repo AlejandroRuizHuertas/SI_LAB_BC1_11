@@ -95,25 +95,29 @@ public class Celda {
 	}
 
 	public void removeWalls(Celda next) {
-		int x = this.fila - next.getFila();
+		int x = next.getFila() - this.fila;
+		int y = next.getColumna() - this.columna;		
 		// top 0, right 1, bottom 2, left 3
-
-		if (x == 1) {
-			neighbors[3] = false;
-			next.neighbors[1] = false;
-		} else if (x == -1) {
-			neighbors[1] = false;
-			next.neighbors[3] = false;
+		// a = (2,1)
+		//next = (1,1)
+		//mov = a - next = (1,0)
+		
+		if (x == 1) {//Sur
+			neighbors[2] = true;
+			next.neighbors[0] = true;
+		} else if (x == -1) { //Norte
+			neighbors[0] = true;
+			next.neighbors[2] = true;
 		}
 
-		int y = this.columna - next.getColumna();
 
-		if (y == 1) {
-			neighbors[0] = false;
-			next.neighbors[2] = false;
-		} else if (y == -1) {
-			neighbors[2] = false;
-			next.neighbors[0] = false;
+
+		if (y == 1) {//Este
+			neighbors[1] = true;
+			next.neighbors[3] = true;
+		} else if (y == -1) {//Oeste
+			neighbors[3] = true;
+			next.neighbors[1] = true;
 		}
 	}
 	/*

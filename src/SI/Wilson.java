@@ -93,33 +93,33 @@ public class Wilson {
 			a = pila.pop();
 			try {
 				b = (Celda) pila.peek();
+				a.setExcavada(true);
 
+				a.removeWalls(b);
 			} catch (Exception EmptyStackException) {
 
 			}
 			a.setExcavada(true);
-
-			a.removeWalls(b);
 
 		}
 
 	}
 
 	public static void hacerCamino(Celda[][] laberinto, Celda actual) {
-		Stack<Celda> pila = new Stack<Celda>();
-		pila.push(actual);
+		Stack<Celda> camino = new Stack<Celda>();
+		camino.push(actual);
 		while (!actual.isExcavada()) {
 			Celda nueva = Celda.obtenerVecinoAleatorio(actual, laberinto);
-			if (pila.contains(nueva)) {
-				while (pila.pop().equals(nueva)) {
+			if (camino.contains(nueva)) {
+				while (camino.pop().equals(nueva)) {
 				}
 			} else {
-				pila.push(nueva);
+				camino.push(nueva);
 			}
 			actual = nueva;
 		}
-
-		excavar(pila);
+		
+		excavar(camino);
 	}
 
 	/*
@@ -136,7 +136,7 @@ public class Wilson {
 	public static void inicializarCeldas(Celda[][] arrayCeldas) {
 		for (int i = 0; i < arrayCeldas.length; i++) {
 			for (int j = 0; j < arrayCeldas[0].length; j++) {
-				boolean[] vecinos = { true, true, true, true };
+				boolean[] vecinos = { false, false, false, false };
 				if (i == 0) {
 					vecinos[0] = false; // norte
 				}
