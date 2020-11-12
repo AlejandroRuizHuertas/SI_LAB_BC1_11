@@ -1,4 +1,4 @@
-package SI;
+package SI.JSON;
 
 public class CeldaJSON {
 	int value;

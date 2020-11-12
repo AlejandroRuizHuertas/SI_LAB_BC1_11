@@ -1,4 +1,4 @@
-package SI;
+package SI.Interfaz;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -7,6 +7,10 @@ import javax.swing.border.EmptyBorder;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
+
+import SI.JSON.PuzzleJSON;
+import SI.Wilson.Celda;
+import SI.Wilson.Wilson;
 
 import java.awt.GridBagLayout;
 import javax.swing.JTextField;

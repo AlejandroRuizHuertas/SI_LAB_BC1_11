@@ -1,4 +1,4 @@
-package SI;
+package SI.Wilson;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -8,6 +8,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
+
+import SI.JSON.PuzzleJSON;
 
 public class Wilson {
 

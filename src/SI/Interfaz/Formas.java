@@ -1,4 +1,4 @@
-package SI;
+package SI.Interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -14,6 +14,10 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import SI.Wilson.Celda;
+import SI.Wilson.Wilson;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;

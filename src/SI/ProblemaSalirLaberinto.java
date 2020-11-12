@@ -3,6 +3,8 @@ package SI;
 import java.util.ArrayList;
 import java.util.List;
 
+import SI.Wilson.Celda;
+
 public class ProblemaSalirLaberinto {
 	private List<Nodo> arbol;
 	

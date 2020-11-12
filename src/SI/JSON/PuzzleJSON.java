@@ -1,9 +1,11 @@
-package SI;
+package SI.JSON;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import SI.Wilson.Celda;
 
 public class PuzzleJSON {
 	private int rows;
@@ -72,8 +74,10 @@ public class PuzzleJSON {
 		Celda[][]lab = new Celda[this.rows][this.cols];
 		for (Map.Entry<String,CeldaJSON> entry : cells.entrySet()) {
 			String id = entry.getKey();
-			int fil = Character.getNumericValue(id.charAt(1));
-			int col = Character.getNumericValue(id.charAt(4));
+			String fila = id.substring(1, id.indexOf(','));
+			String columna = id.substring(id.indexOf(' ')+1, id.indexOf(')'));
+			int fil = Integer.parseInt(fila);
+			int col = Integer.parseInt(columna);
 			CeldaJSON cell = entry.getValue();
 			lab[fil][col] = new Celda(fil,col,cell.getNeighbors());
             

@@ -2,6 +2,8 @@ package SI;
 
 import java.util.Scanner;
 
+import SI.Interfaz.Interfaz;
+
 public class Lanzadora {
 	
 	static int filas;
