@@ -168,8 +168,10 @@ public class Interfaz extends JFrame {
 			   BufferedReader br;
 			
 				br = new BufferedReader(new FileReader(path));
-				Wilson leido = gson.fromJson(br, Wilson.class);
-				Formas frame = new Formas(leido.cells);
+				PuzzleJSON leido = gson.fromJson(br, PuzzleJSON.class);
+				
+				//Wilson leido = gson.fromJson(br, Wilson.class);
+				Formas frame = new Formas(leido.getLaberinto());
 				frame.setVisible(true);
 				
 			} catch (FileNotFoundException e1) {

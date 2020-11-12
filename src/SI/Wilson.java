@@ -54,8 +54,8 @@ public class Wilson {
 		int filas = cells.length;
 		int columnas = cells[0].length;
 		Gson gson = new Gson();
-		Wilson solucion = new Wilson(filas, columnas, 4, mov, id_mov, cells);
-		
+		//Wilson solucion = new Wilson(filas, columnas, 4, mov, id_mov, cells);
+		PuzzleJSON solucion = new PuzzleJSON(filas, columnas, cells);
 		String j = gson.toJson(solucion);
 		System.out.println(j.toString());
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter("laberinto"+filas+"x"+columnas+".json"))) {
@@ -66,7 +66,7 @@ public class Wilson {
 		}
 
 	}
-
+	
 	private static boolean laberintoExcavado(Celda[][] laberinto) {
 		for (int i = 0; i < laberinto.length; i++) {
 			for (int j = 0; j < laberinto[0].length; j++) {
