@@ -86,9 +86,11 @@ public class Wilson {
 	 * 
 	 * Version: 1.2
 	 */
+	
 	public static void excavar(Stack<Celda> pila) {
 		Celda a = null;
 		Celda b = null;
+
 		while (!pila.isEmpty()) {
 			a = pila.pop();
 			try {
@@ -97,9 +99,9 @@ public class Wilson {
 
 				a.removeWalls(b);
 			} catch (Exception EmptyStackException) {
-
+				a.setExcavada(true);
 			}
-			a.setExcavada(true);
+			
 
 		}
 
@@ -111,8 +113,10 @@ public class Wilson {
 		while (!actual.isExcavada()) {
 			Celda nueva = Celda.obtenerVecinoAleatorio(actual, laberinto);
 			if (camino.contains(nueva)) {
-				while (camino.pop().equals(nueva)) {
+				while (camino.contains(nueva)) {
+					camino.pop();
 				}
+				camino.push(nueva);
 			} else {
 				camino.push(nueva);
 			}
@@ -137,18 +141,6 @@ public class Wilson {
 		for (int i = 0; i < arrayCeldas.length; i++) {
 			for (int j = 0; j < arrayCeldas[0].length; j++) {
 				boolean[] vecinos = { false, false, false, false };
-				if (i == 0) {
-					vecinos[0] = false; // norte
-				}
-				if (j == (arrayCeldas[0].length - 1)) {
-					vecinos[1] = false; // este
-				}
-				if (i == (arrayCeldas.length - 1)) {
-					vecinos[2] = false; // sur
-				}
-				if (j == 0) {
-					vecinos[3] = false; // oeste
-				}
 				arrayCeldas[i][j] = new Celda(i, j, vecinos);
 			}
 		}
