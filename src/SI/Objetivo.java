@@ -10,6 +10,8 @@ public class Objetivo {
 		Objetivo = objetivo;
 		Maze = maze;
 	}
+	
+	
 
 	public String getInicial() {
 		return Inicial;

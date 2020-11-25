@@ -4,7 +4,7 @@ import java.util.List;
 
 import SI.Wilson.Celda;
 
-public class Nodo {
+public class Nodo implements Comparable<Nodo> {
 	private int id;
 	private int costo;
 	private String id_estado; // Las coordenadas del estado actual
@@ -90,7 +90,19 @@ public class Nodo {
 		this.valor = valor;
 	}
 
-	public static void CrearNodo(Celda[][] lab, List<Nodo> arbol) {
-
+	public int compareTo(Nodo nodo1) {
+		if (this.valor > nodo1.getValor()) {
+			return 1;
+		} else if (this.valor < nodo1.getValor()) {
+			return -1;
+		} else {
+			
+			if (this.id > nodo1.getId()) {
+				return 1;
+			} else {
+				return -1;
+			}
+		}
 	}
+
 }

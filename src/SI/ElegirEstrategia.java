@@ -156,7 +156,7 @@ public class ElegirEstrategia extends JFrame {
 
 			String estrategia = escogerEstrategia();
 			System.out.println(estrategia);
-			ProblemaSalirLaberinto.SalirLaberinto(laberinto, inicio, objetivo);
+			ProblemaSalirLaberinto.SalirLaberinto(laberinto, inicio, objetivo, estrategia);
 			Formas formaFinal = new Formas(laberinto);
 			formaFinal.setVisible(true);
 			self.dispose();
