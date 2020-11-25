@@ -2,6 +2,7 @@ package SI.Interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -12,6 +13,10 @@ import javax.imageio.ImageIO;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import SI.ElegirEstrategia;
+import SI.Nodo;
 import SI.ProblemaSalirLaberinto;
 import SI.Wilson.Celda;
 import SI.Wilson.Wilson;
@@ -23,14 +28,17 @@ import javax.swing.JSplitPane;
 
 public class Formas extends JFrame {
 
+	private JPanel contentPane;
 	private Celda[][] laberinto;
 	private Graphics2D g2d;
 	private BufferedImage bufferedImage;
+	private Formas self;
 
 	/**
 	 * Create the frame.
 	 */
 	public Formas(Celda[][] lab) {
+		self = this;
 		setResizable(false);
 		this.laberinto = lab;
 		this.setBounds(0, 0, 400, 400);
@@ -47,6 +55,7 @@ public class Formas extends JFrame {
 		JButton btnResolver = new JButton("Resolver");
 		btnResolver.addActionListener(new BtnResolverActionListener());
 		splitPane.setRightComponent(btnResolver);
+		
 
 	}
 
@@ -163,9 +172,10 @@ public class Formas extends JFrame {
 
 	private class BtnResolverActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			Celda inicio = laberinto[0][0];
-			Celda objetivo = laberinto[laberinto.length - 1][laberinto[0].length - 1];
-			ProblemaSalirLaberinto.SalirLaberinto(laberinto, inicio, objetivo);
+			ElegirEstrategia frameElegirEstrategia = new ElegirEstrategia(laberinto);
+			frameElegirEstrategia.setVisible(true);
+			self.dispose();
+			
 		}
 	}
 }
