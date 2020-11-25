@@ -74,7 +74,20 @@ public class Formas extends JFrame {
 			for (int j = 0; j < laberinto[0].length; j++) {
 				Celda c = laberinto[i][j];
 
-				rellenarCelda(c, inicio, grosor, g, Color.white, g2d);
+				switch(c.getvalue()) {
+				case 0:
+					rellenarCelda(c, inicio, grosor, g, Color.white, g2d);
+					break;
+				case 1:
+					rellenarCelda(c, inicio, grosor, g, new Color(223,199,167), g2d);
+					break;
+				case 2:
+					rellenarCelda(c, inicio, grosor, g, new Color(202,231,193), g2d);
+					break;
+				case 3:
+					rellenarCelda(c, inicio, grosor, g, new Color(128,206,225), g2d);
+					break;
+				}
 
 				dibujarParedes(c, inicio, grosor, g, g2d);
 
@@ -106,7 +119,9 @@ public class Formas extends JFrame {
 
 			g.drawLine(x1, y1, x2, y2);
 
+
 			g2d.drawLine(x1, y1, x2, y2);
+
 		}
 		// Si tiene pared al este
 		if (!c.getneighbors()[1]) {
