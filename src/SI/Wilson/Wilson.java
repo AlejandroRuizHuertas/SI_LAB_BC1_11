@@ -19,7 +19,6 @@ public class Wilson {
 	int mov[][];
 	String[] id_mov;
 	Celda[][] cells;
-	static List<Celda> camino = new ArrayList<Celda>();
 
 	final static List<Celda> listaCeldas = new ArrayList<Celda>();
 
@@ -51,8 +50,6 @@ public class Wilson {
 	}
 
 	public static void generarJson(Celda[][] cells) {
-		int mov[][] = { { -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 } };
-		String[] id_mov = { "N", "E", "S", "O" };
 		int filas = cells.length;
 		int columnas = cells[0].length;
 		Gson gson = new Gson();

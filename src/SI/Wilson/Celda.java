@@ -15,11 +15,16 @@ public class Celda {
 	public Celda(int fila, int columna, boolean[] neighbors) {
 		this.fila = fila;
 		this.columna = columna;
-		this.value = 0;
+		this.value = valorCelda();
 		this.neighbors = neighbors;
 		this.excavada = false;
 	}
 
+	private int valorCelda() {
+		Random random = new Random();
+		int valor = random.nextInt(4);
+		return valor;
+	}
 
 	/*
 	 * Nombre: celdaVecinaAleatoria
@@ -58,13 +63,12 @@ public class Celda {
 		}
 	}
 
-
 	/*
 	 * Nombre: obtenerListaneighbors
 	 * 
-	 * Explicacion: Comprobamos todos los posibles neighbors de la celda actual en la
-	 * que nos encontramos. Si tiene algun vecino que no este visitado, entonces lo
-	 * a�ade a una lista de neighbors. Si la lista solo tiene un elemento,
+	 * Explicacion: Comprobamos todos los posibles neighbors de la celda actual en
+	 * la que nos encontramos. Si tiene algun vecino que no este visitado, entonces
+	 * lo a�ade a una lista de neighbors. Si la lista solo tiene un elemento,
 	 * devolvemos ese elemento, si tiene mas de uno, entonces buscara uno aleatorio.
 	 * 
 	 * Version 1.0
@@ -96,26 +100,24 @@ public class Celda {
 
 	public void removeWalls(Celda next) {
 		int x = next.getFila() - this.fila;
-		int y = next.getColumna() - this.columna;		
+		int y = next.getColumna() - this.columna;
 		// top 0, right 1, bottom 2, left 3
 		// a = (2,1)
-		//next = (1,1)
-		//mov = a - next = (1,0)
-		
-		if (x == 1) {//Sur
+		// next = (1,1)
+		// mov = a - next = (1,0)
+
+		if (x == 1) {// Sur
 			neighbors[2] = true;
 			next.neighbors[0] = true;
-		} else if (x == -1) { //Norte
+		} else if (x == -1) { // Norte
 			neighbors[0] = true;
 			next.neighbors[2] = true;
 		}
 
-
-
-		if (y == 1) {//Este
+		if (y == 1) {// Este
 			neighbors[1] = true;
 			next.neighbors[3] = true;
-		} else if (y == -1) {//Oeste
+		} else if (y == -1) {// Oeste
 			neighbors[3] = true;
 			next.neighbors[1] = true;
 		}

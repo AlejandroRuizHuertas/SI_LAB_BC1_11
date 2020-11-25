@@ -2,7 +2,6 @@ package SI.Interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -13,9 +12,6 @@ import javax.imageio.ImageIO;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import SI.Nodo;
 import SI.ProblemaSalirLaberinto;
 import SI.Wilson.Celda;
 import SI.Wilson.Wilson;
@@ -27,7 +23,6 @@ import javax.swing.JSplitPane;
 
 public class Formas extends JFrame {
 
-	private JPanel contentPane;
 	private Celda[][] laberinto;
 	private Graphics2D g2d;
 	private BufferedImage bufferedImage;
