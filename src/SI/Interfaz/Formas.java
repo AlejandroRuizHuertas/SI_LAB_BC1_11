@@ -15,6 +15,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import SI.Nodo;
+import SI.ProblemaSalirLaberinto;
 import SI.Wilson.Celda;
 import SI.Wilson.Wilson;
 
@@ -168,6 +170,7 @@ public class Formas extends JFrame {
 	private class BtnResolverActionListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("Ale, resuelto");
+			ProblemaSalirLaberinto.SalirLaberinto(laberinto, null, null);
 		}
 	}
 }
