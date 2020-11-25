@@ -32,7 +32,6 @@ public class Formas extends JFrame {
 	private Graphics2D g2d;
 	private BufferedImage bufferedImage;
 
-
 	/**
 	 * Create the frame.
 	 */
@@ -41,19 +40,18 @@ public class Formas extends JFrame {
 		this.laberinto = lab;
 		this.setBounds(0, 0, 400, 400);
 		this.setLocationRelativeTo(null);
-		
+
 		JSplitPane splitPane = new JSplitPane();
 		splitPane.setEnabled(false);
 		getContentPane().add(splitPane, BorderLayout.SOUTH);
-		
+
 		JButton btnGuardar = new JButton("Guardar laberinto");
 		btnGuardar.addActionListener(new BtnGuardarActionListener());
 		splitPane.setLeftComponent(btnGuardar);
-		
+
 		JButton btnResolver = new JButton("Resolver");
 		btnResolver.addActionListener(new BtnResolverActionListener());
 		splitPane.setRightComponent(btnResolver);
-	
 
 	}
 
@@ -153,6 +151,7 @@ public class Formas extends JFrame {
 		g2d.setColor(color);
 		g2d.fillRect(x1, y1, grosor, grosor);
 	}
+
 	private class BtnGuardarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			g2d.dispose();
@@ -166,11 +165,12 @@ public class Formas extends JFrame {
 			}
 		}
 	}
-	
-	private class BtnResolverActionListener implements ActionListener{
+
+	private class BtnResolverActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("Ale, resuelto");
-			ProblemaSalirLaberinto.SalirLaberinto(laberinto, null, null);
+			Celda inicio = laberinto[0][0];
+			Celda objetivo = laberinto[laberinto.length - 1][laberinto[0].length - 1];
+			ProblemaSalirLaberinto.SalirLaberinto(laberinto, inicio, objetivo);
 		}
 	}
 }
