@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import SI.Interfaz.Formas;
+import SI.Problema.Busqueda;
 import SI.Wilson.Celda;
 import SI.Wilson.Wilson;
 
@@ -156,7 +157,7 @@ public class ElegirEstrategia extends JFrame {
 
 			String estrategia = escogerEstrategia();
 			System.out.println(estrategia);
-			ProblemaSalirLaberinto.SalirLaberinto(laberinto, inicio, objetivo, estrategia);
+			Busqueda.SalirLaberinto(laberinto, inicio, objetivo, estrategia);
 			Formas formaFinal = new Formas(laberinto);
 			formaFinal.setVisible(true);
 			self.dispose();

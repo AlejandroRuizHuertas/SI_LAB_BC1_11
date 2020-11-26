@@ -1,4 +1,4 @@
-package SI;
+package SI.Problema;
 
 public class Sucesor {
 	private String Mov;

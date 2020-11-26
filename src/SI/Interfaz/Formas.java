@@ -16,8 +16,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import SI.ElegirEstrategia;
-import SI.Nodo;
-import SI.ProblemaSalirLaberinto;
+import SI.JSON.ProblemaJSON;
+import SI.Problema.Nodo;
+import SI.Problema.Busqueda;
 import SI.Wilson.Celda;
 import SI.Wilson.Wilson;
 
@@ -55,7 +56,6 @@ public class Formas extends JFrame {
 		JButton btnResolver = new JButton("Resolver");
 		btnResolver.addActionListener(new BtnResolverActionListener());
 		splitPane.setRightComponent(btnResolver);
-		
 
 	}
 
@@ -74,18 +74,27 @@ public class Formas extends JFrame {
 			for (int j = 0; j < laberinto[0].length; j++) {
 				Celda c = laberinto[i][j];
 
-				switch(c.getvalue()) {
+				switch (c.getvalue()) {
 				case 0:
 					rellenarCelda(c, inicio, grosor, g, Color.white, g2d);
 					break;
 				case 1:
-					rellenarCelda(c, inicio, grosor, g, new Color(223,199,167), g2d);
+					rellenarCelda(c, inicio, grosor, g, new Color(223, 199, 167), g2d);
 					break;
 				case 2:
-					rellenarCelda(c, inicio, grosor, g, new Color(202,231,193), g2d);
+					rellenarCelda(c, inicio, grosor, g, new Color(202, 231, 193), g2d);
 					break;
 				case 3:
-					rellenarCelda(c, inicio, grosor, g, new Color(128,206,225), g2d);
+					rellenarCelda(c, inicio, grosor, g, new Color(128, 206, 225), g2d);
+					break;
+				case 4: // Si está en el camino solución
+					rellenarCelda(c, inicio, grosor, g, Color.red, g2d);
+					break;
+				case 5: // Si está en la frontera
+					rellenarCelda(c, inicio, grosor, g, Color.blue, g2d);
+					break;
+				case 6: // Si está visitado
+					rellenarCelda(c, inicio, grosor, g, Color.green, g2d);
 					break;
 				}
 
@@ -118,7 +127,6 @@ public class Formas extends JFrame {
 			y2 = y1;
 
 			g.drawLine(x1, y1, x2, y2);
-
 
 			g2d.drawLine(x1, y1, x2, y2);
 
@@ -174,10 +182,11 @@ public class Formas extends JFrame {
 	private class BtnGuardarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			g2d.dispose();
-			File file = new File("milaberinto.png");
+			File file = new File("puzzle_loop_" + laberinto.length + "x" + laberinto[0].length + ".png");
 			try {
 				ImageIO.write(bufferedImage, "png", file);
 				Wilson.generarJson(laberinto);
+				ProblemaJSON.generarJSONProblema(laberinto.length, laberinto[0].length);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -190,7 +199,7 @@ public class Formas extends JFrame {
 			ElegirEstrategia frameElegirEstrategia = new ElegirEstrategia(laberinto);
 			frameElegirEstrategia.setVisible(true);
 			self.dispose();
-			
+
 		}
 	}
 }

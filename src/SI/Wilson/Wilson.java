@@ -53,13 +53,11 @@ public class Wilson {
 		int filas = cells.length;
 		int columnas = cells[0].length;
 		Gson gson = new Gson();
-		//Wilson solucion = new Wilson(filas, columnas, 4, mov, id_mov, cells);
 		PuzzleJSON solucion = new PuzzleJSON(filas, columnas, cells);
 		String j = gson.toJson(solucion);
-		System.out.println(j.toString());
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter("laberinto"+filas+"x"+columnas+".json"))) {
+		try (BufferedWriter bw = new BufferedWriter(new FileWriter("problema_"+filas+"x"+columnas+"_maze.json"))) {
 			bw.write(j);
-			System.out.println("Fichero creado");
+			System.out.println("Definición del laberinto creado.");
 		} catch (IOException ex) {
 			Logger.getLogger(Wilson.class.getName()).log(Level.SEVERE, null, ex);
 		}

@@ -1,4 +1,4 @@
-package SI;
+package SI.Problema;
 
 import java.util.List;
 
@@ -13,9 +13,10 @@ public class Nodo implements Comparable<Nodo> {
 	private int profundidad;
 	private int heuristica;
 	private int valor;
+	private Celda c;
 
 	public Nodo(int id, int costo, String id_estado, Nodo id_padre, String accion, int profundidad, int heuristica,
-			int valor) {
+			int valor, Celda c) {
 		this.id = id;
 		this.costo = costo;
 		this.id_estado = id_estado;
@@ -24,6 +25,7 @@ public class Nodo implements Comparable<Nodo> {
 		this.profundidad = profundidad;
 		this.heuristica = heuristica;
 		this.valor = valor;
+		this.c = c;
 	}
 
 	public int getId() {
@@ -103,6 +105,14 @@ public class Nodo implements Comparable<Nodo> {
 				return -1;
 			}
 		}
+	}
+
+	public Celda getCelda() {
+		return c;
+	}
+
+	public void setCelda(Celda c) {
+		this.c = c;
 	}
 
 }

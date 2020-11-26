@@ -1,4 +1,4 @@
-package SI;
+package SI.Problema;
 
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -33,6 +33,9 @@ public class Frontera {
 
 		return fronteraPQ.poll();
 
+	}
+	public Nodo verPrimerElemento() {
+		return fronteraPQ.peek();
 	}
 
 	public boolean esVacia() {
