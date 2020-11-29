@@ -9,45 +9,117 @@ public class Busqueda {
 
 	public static void SalirLaberinto(Celda[][] lab, Celda inicio, Celda fin, String estrategia) {
 		int profundidad = 1000000;
-		
+
 		Frontera frontera = Frontera.getFrontera();
-		List <String> visitados = new ArrayList<String>();
+		List<String> visitados = new ArrayList<String>();
 		boolean solucion = false;
-		
+		Nodo nodo = null;
+
 		int id = 0;
 
-		Nodo inicial = new Nodo(id++, 0, "(0, 0)", null, null, 0, heuristica(lab, inicio, fin), calcula(estrategia, null),inicio);
+		int valorinicial = valorInicial(estrategia, inicio, fin);
+
+		Nodo inicial = new Nodo(id++, 0, "(0, 0)", null, null, 0, heuristica(inicio, fin), valorinicial, inicio);
 		frontera.insertar(inicial);
-		
-		while(!frontera.esVacia()&&!solucion) {
-			Nodo nodo = frontera.retirar();
-			if(esObjetivo(nodo, fin)) {
+
+		while (!frontera.esVacia() && !solucion) {
+			nodo = frontera.retirar();
+			if (esObjetivo(nodo, fin)) {
 				solucion = true;
 			}
-			//Esto comprobarlo
-			else if (!visitados.contains(nodo.getId_estado()) && nodo.getProfundidad()<profundidad) {
+			// Esto comprobarlo
+			else if (!visitados.contains(nodo.getId_estado()) && nodo.getProfundidad() < profundidad) {
 				visitados.add(nodo.getId_estado());
-				List <Nodo> hijos = new ArrayList<Nodo>();
-				hijos = expandirNodo(lab, estrategia, nodo);
+				List<Nodo> hijos = new ArrayList<Nodo>();
+				hijos = expandirNodo(lab, estrategia, nodo, id, fin);
 				for (Nodo n : hijos) {
 					frontera.insertar(n);
 				}
 			}
-			
+
 		}
 		if (solucion) {
-			//Hay que asignar en el lab los valores 4 a los que son solución, 5 a los que están en la frontera y 6 a los que están visitados
+			// Hay que asignar en el lab los valores 4 a los que son solución, 5 a los que
+			// están en la frontera y 6 a los que están visitados
+			pintarSolucion(lab, frontera, visitados, nodo, inicio);
+
+		} else if (!solucion) {
+			System.out.println("No hay solución.");
 		}
 	}
 
-	private static List<Nodo> expandirNodo(Celda[][] lab, String estrategia, Nodo nodo) {
-		// TODO Auto-generated method stub
+	private static void pintarSolucion(Celda[][] lab, Frontera frontera, List<String> visitados, Nodo nodo,
+			Celda inicial) {
+		List<Celda> padres = new ArrayList<Celda>();
+		padres.add(nodo.getCelda());
+		Nodo padre = nodo.getId_padre();
+		padres.add(padre.getCelda());
+		Celda c = padre.getCelda();
+		while (!c.equals(inicial)) {
+			c = padre.getId_padre().getCelda();
+			padre = padre.getId_padre();
+			padres.add(c);
+		}
+		for(Celda d : padres) {
+			d.setvalue(4);
+		}
+	}
+
+	private static int valorInicial(String estrategia, Celda inicial, Celda fin) {
+		int valor = 0;
+		switch (estrategia) {
+		case "BREADTH":
+			valor = 0;
+			break;
+
+		case "DEPTH":
+			valor = 1;
+			break;
+
+		case "UNIFORM":
+			valor = 0;
+			break;
+
+		case "GREEDY":
+			valor = heuristica(inicial, fin);
+			break;
+
+		case "A":
+			valor = heuristica(inicial, fin);
+			break;
+		}
+		return valor;
+	}
+
+	private static List<Nodo> expandirNodo(Celda[][] lab, String estrategia, Nodo nodo, int id, Celda fin) {
+		List<Nodo> listanodos = new ArrayList<Nodo>();
+		List<Celda> vecinos = nodo.getCelda().obtenerSucesores(lab, nodo.getCelda());
+		for (Celda c : vecinos) {
+			Nodo n = new Nodo(id++, c.getvalue() + 1, "(" + c.getFila() + ", " + c.getColumna() + ")", nodo,
+					direccion(nodo.getCelda(), c), nodo.getProfundidad() + 1, heuristica(c, fin), 0, c);
+			n.setValor(calcula(estrategia, nodo, n, fin));
+			listanodos.add(n);
+		}
+		return listanodos;
+	}
+
+	private static String direccion(Celda actual, Celda destino) {
+		int x = destino.getFila() - actual.getFila();
+		int y = destino.getColumna() - actual.getColumna();
+
+		if (x == 1) {// Sur
+			return "S";
+		} else if (x == -1) { // Norte
+			return "N";
+		}
+
+		if (y == 1) {// Este
+			return "E";
+		} else if (y == -1) {// Oeste
+			return "O";
+		}
 		return null;
 	}
-	
-	
-	
-	
 
 	private static boolean esObjetivo(Nodo nodo, Celda fin) {
 		Celda c = nodo.getCelda();
@@ -57,22 +129,38 @@ public class Busqueda {
 			return false;
 	}
 
-	private static int heuristica(Celda[][] lab, Celda estado, Celda fin) {
+	private static int heuristica(Celda estado, Celda fin) {
 		int h1 = Math.abs(estado.getFila() - fin.getFila());
 		int h2 = Math.abs(estado.getColumna() - fin.getColumna());
 		int resultado = h1 + h2;
 		return resultado;
 	}
 
-	private static int calcula(String estrategia, Nodo n) {
+	private static int calcula(String estrategia, Nodo padre, Nodo hijo, Celda fin) {
+		int valor = hijo.getValor();
+		switch (estrategia) {
+		case "BREADTH":
+			valor = hijo.getProfundidad();
+			break;
 
-		return 0;
+		case "DEPTH":
+			valor = -hijo.getProfundidad();
+			break;
+
+		case "UNIFORM":
+			valor = padre.getCosto() + hijo.getCosto();
+			break;
+
+		case "GREEDY":
+			valor = heuristica(hijo.getCelda(), fin);
+			break;
+
+		case "A":
+			valor = hijo.getCosto() + heuristica(hijo.getCelda(), fin);
+			break;
+		}
+
+		return valor;
 	}
 
-	/*
-	 * El valor que introduzco en los nodos es aleatorio private static Nodo
-	 * convertirANodoInicial(Celda celda, int id) { String id_estado = "(" +
-	 * celda.getFila() + "," + celda.getColumna() + ")"; Nodo n = new Nodo(id, 1,
-	 * id_estado, null, "", 0, 0, 0); return n; }
-	 */
 }

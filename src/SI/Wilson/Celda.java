@@ -63,6 +63,36 @@ public class Celda {
 		}
 	}
 
+	public static Celda comprobarSucesor(int desplazamientoFila, int desplazamientoColumna, Celda[][] laberinto,
+			Celda actual) {
+		Celda vecino = null;
+		try {
+			vecino = laberinto[actual.getFila() + desplazamientoFila][actual.getColumna() + desplazamientoColumna];
+			int x = vecino.getFila() - actual.getFila();
+			int y = vecino.getColumna() - actual.getColumna();
+			int direccion = 0;
+			if (x == 1) {// Sur
+				direccion = 2;
+			} else if (x == -1) { // Norte
+				direccion = 0;
+			}
+
+			if (y == 1) {// Este
+				direccion = 1;
+			} else if (y == -1) {// Oeste
+				direccion = 3;
+			}
+			if (actual.neighbors[direccion]) {
+				return vecino;
+			} else {
+				return null;
+			}
+
+		} catch (Exception ArrayIndexOutOfBoundsException) {
+			return null;
+		}
+	}
+
 	/*
 	 * Nombre: obtenerListaneighbors
 	 * 
@@ -80,6 +110,31 @@ public class Celda {
 		Celda este = comprobarCeldaVecina(0, 1, laberinto, actual);
 		Celda sur = comprobarCeldaVecina(1, 0, laberinto, actual);
 		Celda oeste = comprobarCeldaVecina(0, -1, laberinto, actual);
+
+		if (norte != null) {
+			listaneighbors.add(norte);
+		}
+		if (este != null) {
+			listaneighbors.add(este);
+		}
+		if (sur != null) {
+			listaneighbors.add(sur);
+		}
+		if (oeste != null) {
+			listaneighbors.add(oeste);
+		}
+
+		return listaneighbors;
+
+	}
+
+	public static List<Celda> obtenerSucesores(Celda[][] laberinto, Celda actual) {
+		List<Celda> listaneighbors = new ArrayList<Celda>();
+
+		Celda norte = comprobarSucesor(-1, 0, laberinto, actual);
+		Celda este = comprobarSucesor(0, 1, laberinto, actual);
+		Celda sur = comprobarSucesor(1, 0, laberinto, actual);
+		Celda oeste = comprobarSucesor(0, -1, laberinto, actual);
 
 		if (norte != null) {
 			listaneighbors.add(norte);
