@@ -41,28 +41,28 @@ public class Busqueda {
 		if (solucion) {
 			// Hay que asignar en el lab los valores 4 a los que son solución, 5 a los que
 			// están en la frontera y 6 a los que están visitados
-			pintarSolucion(lab, frontera, visitados, nodo, inicio);
+			
+			crearNodosSolucion(frontera, visitados, nodo, inicial);
 
 		} else if (!solucion) {
 			System.out.println("No hay solución.");
 		}
 	}
 
-	private static void pintarSolucion(Celda[][] lab, Frontera frontera, List<String> visitados, Nodo nodo,
-			Celda inicial) {
+	private static void crearNodosSolucion(Frontera frontera, List<String> visitados, Nodo nodoFinal,
+			Nodo nodoInicial) {
 		List<Nodo> solucion = new ArrayList<Nodo>();
-		solucion.add(nodo);
-		Nodo padre = nodo.getId_padre();
+		solucion.add(nodoFinal);
+		Nodo padre = nodoFinal.getId_padre();
 		solucion.add(padre);
-		Celda c = padre.getCelda();
 
-		while (!c.equals(inicial)) {
-			//System.out.println("Padre: "+padre.getId_estado());
-			//System.out.println("Hija: "+c.getFila()+ " " + c.getColumna());
-			c = padre.getId_padre().getCelda();
+		while (!padre.equals(nodoInicial)) {
+
 			padre = padre.getId_padre();
 			solucion.add(padre);
 		}
+		
+		//Hasta aquí
 		for(Nodo d : solucion) {
 			d.getCelda().setvalue(4);
 		}
@@ -157,7 +157,7 @@ public class Busqueda {
 			break;
 
 		case "GREEDY":
-			valor = heuristica(hijo.getCelda(), fin);
+			valor =  heuristica(hijo.getCelda(), fin);
 			break;
 
 		case "A":
