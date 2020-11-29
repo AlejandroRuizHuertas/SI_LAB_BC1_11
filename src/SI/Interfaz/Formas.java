@@ -34,12 +34,16 @@ public class Formas extends JFrame {
 	private Graphics2D g2d;
 	private BufferedImage bufferedImage;
 	private Formas self;
+	private boolean resultado;
+	private String estrategia;
 
 	/**
 	 * Create the frame.
 	 */
-	public Formas(Celda[][] lab) {
+	public Formas(Celda[][] lab, boolean resultado, String estrategia) {
 		self = this;
+		this.resultado = resultado;
+		this.estrategia = estrategia;
 		setResizable(false);
 		this.laberinto = lab;
 		this.setBounds(0, 0, 400, 400);
@@ -54,6 +58,10 @@ public class Formas extends JFrame {
 		splitPane.setLeftComponent(btnGuardar);
 
 		JButton btnResolver = new JButton("Resolver");
+
+		if (resultado) {
+			btnResolver.setEnabled(false);
+		}
 		btnResolver.addActionListener(new BtnResolverActionListener());
 		splitPane.setRightComponent(btnResolver);
 
@@ -181,8 +189,34 @@ public class Formas extends JFrame {
 
 	private class BtnGuardarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			if (!resultado)
+				guardarLaberinto();
+			else
+				guardarSolucion();
+
+		}
+
+		private void guardarSolucion() {
+			File file;
 			g2d.dispose();
-			File file = new File("puzzle_loop_" + laberinto.length + "x" + laberinto[0].length + ".png");
+
+			file = new File("solution_" + laberinto.length + "x" + laberinto[0].length + "_" + estrategia + "_20.png");
+
+			try {
+				ImageIO.write(bufferedImage, "png", file);
+				Wilson.generarJson(laberinto);
+				ProblemaJSON.generarJSONProblema(laberinto.length, laberinto[0].length);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+		}
+
+		private void guardarLaberinto() {
+			File file;
+			g2d.dispose();
+			file = new File("puzzle_loop_" + laberinto.length + "x" + laberinto[0].length + ".png");
 			try {
 				ImageIO.write(bufferedImage, "png", file);
 				Wilson.generarJson(laberinto);

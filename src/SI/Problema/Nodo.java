@@ -93,12 +93,29 @@ public class Nodo implements Comparable<Nodo> {
 	}
 
 	public int compareTo(Nodo nodo1) {
+		// Valor del nodo
 		if (this.valor > nodo1.getValor()) {
 			return 1;
 		} else if (this.valor < nodo1.getValor()) {
 			return -1;
-		} else {
-			
+		}
+		// Fila del estado del nodo
+		else if (c.getFila() > nodo1.getCelda().getFila()) {
+			return 1;
+
+		} else if (c.getFila() < nodo1.getCelda().getFila()) {
+			return -1;
+		}
+
+		// Columna del estado del nodo
+		else if (c.getColumna() > nodo1.getCelda().getColumna()) {
+			return 1;
+		} else if (c.getColumna() < nodo1.getCelda().getColumna()) {
+			return -1;
+		}
+		// Identificador único del nodo
+		else {
+
 			if (this.id > nodo1.getId()) {
 				return 1;
 			} else {
@@ -114,7 +131,5 @@ public class Nodo implements Comparable<Nodo> {
 	public void setCelda(Celda c) {
 		this.c = c;
 	}
-
-	
 
 }

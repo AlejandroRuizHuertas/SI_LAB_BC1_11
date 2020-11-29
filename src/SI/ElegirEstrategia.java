@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import SI.Interfaz.Formas;
 import SI.Problema.Busqueda;
+import SI.Problema.Nodo;
 import SI.Wilson.Celda;
 import SI.Wilson.Wilson;
 
@@ -28,6 +29,7 @@ import java.awt.Dimension;
 
 import javax.swing.JRadioButton;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class ElegirEstrategia extends JFrame {
@@ -158,7 +160,7 @@ public class ElegirEstrategia extends JFrame {
 			String estrategia = escogerEstrategia();
 			System.out.println(estrategia);
 			Busqueda.SalirLaberinto(laberinto, inicio, objetivo, estrategia);
-			Formas formaFinal = new Formas(laberinto);
+			Formas formaFinal = new Formas(laberinto, true, estrategia);
 			formaFinal.setVisible(true);
 			self.dispose();
 

@@ -50,30 +50,35 @@ public class Busqueda {
 
 	private static void pintarSolucion(Celda[][] lab, Frontera frontera, List<String> visitados, Nodo nodo,
 			Celda inicial) {
-		List<Celda> padres = new ArrayList<Celda>();
-		padres.add(nodo.getCelda());
+		List<Nodo> solucion = new ArrayList<Nodo>();
+		solucion.add(nodo);
 		Nodo padre = nodo.getId_padre();
-		padres.add(padre.getCelda());
+		solucion.add(padre);
 		Celda c = padre.getCelda();
+
 		while (!c.equals(inicial)) {
+			//System.out.println("Padre: "+padre.getId_estado());
+			//System.out.println("Hija: "+c.getFila()+ " " + c.getColumna());
 			c = padre.getId_padre().getCelda();
 			padre = padre.getId_padre();
-			padres.add(c);
+			solucion.add(padre);
 		}
-		for(Celda d : padres) {
-			d.setvalue(4);
+		for(Nodo d : solucion) {
+			d.getCelda().setvalue(4);
 		}
 	}
-
+	//El método valorInicial crea el valor inicial del primer nodo
 	private static int valorInicial(String estrategia, Celda inicial, Celda fin) {
+		
 		int valor = 0;
+		
 		switch (estrategia) {
 		case "BREADTH":
 			valor = 0;
 			break;
 
 		case "DEPTH":
-			valor = 1;
+			valor = 0;
 			break;
 
 		case "UNIFORM":
@@ -148,7 +153,7 @@ public class Busqueda {
 			break;
 
 		case "UNIFORM":
-			valor = padre.getCosto() + hijo.getCosto();
+			valor = padre.getCosto() + 1;
 			break;
 
 		case "GREEDY":

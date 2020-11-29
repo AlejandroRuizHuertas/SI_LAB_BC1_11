@@ -175,7 +175,7 @@ public class Interfaz extends JFrame {
 				PuzzleJSON leido = gson.fromJson(br, PuzzleJSON.class);
 				
 				//Wilson leido = gson.fromJson(br, Wilson.class);
-				Formas frame = new Formas(leido.getLaberinto());
+				Formas frame = new Formas(leido.getLaberinto(), false, null);
 				frame.setVisible(true);
 				
 			} catch (FileNotFoundException e1) {
@@ -199,7 +199,7 @@ public class Interfaz extends JFrame {
 			
 			Wilson.crearLaberinto(laberinto);
 
-			Formas frame = new Formas(laberinto);
+			Formas frame = new Formas(laberinto, false, null);
 			frame.setVisible(true);
 		}
 	}
