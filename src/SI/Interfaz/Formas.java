@@ -45,6 +45,7 @@ public class Formas extends JFrame {
 		this.resultado = resultado;
 		this.estrategia = estrategia;
 		setResizable(false);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.laberinto = lab;
 		this.setBounds(0, 0, 400, 400);
 		this.setLocationRelativeTo(null);

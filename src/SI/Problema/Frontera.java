@@ -19,11 +19,6 @@ public class Frontera {
 		fronteraPQ = new PriorityQueue<Nodo>();
 	}
 
-	public void insertarVarios(Queue<Nodo> listaNodos) {
-		while (!listaNodos.isEmpty()) {
-			fronteraPQ.add(listaNodos.poll());
-		}
-	}
 
 	public void insertar(Nodo nodo) {
 		fronteraPQ.add(nodo);

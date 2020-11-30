@@ -31,7 +31,7 @@ public class Busqueda {
 			else if (!visitados.contains(nodo.getId_estado()) && nodo.getProfundidad() < profundidad) {
 				visitados.add(nodo.getId_estado());
 				List<Nodo> hijos = new ArrayList<Nodo>();
-				hijos = expandirNodo(lab, estrategia, nodo, id, fin);
+				hijos = expandirNodo(lab, estrategia, nodo, id++, fin);
 				for (Nodo n : hijos) {
 					frontera.insertar(n);
 				}
@@ -56,10 +56,12 @@ public class Busqueda {
 		Nodo padre = nodoFinal.getId_padre();
 		solucion.add(padre);
 
-		while (!padre.equals(nodoInicial)) {
+		while (!padre.equals(nodoInicial) && padre.getId_estado() != "(0, 0)") {
 
 			padre = padre.getId_padre();
 			solucion.add(padre);
+			
+			System.out.println(padre.getId_estado());
 		}
 		
 		//Hasta aquí
