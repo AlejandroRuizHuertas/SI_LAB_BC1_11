@@ -9,19 +9,18 @@ public class Busqueda {
 
 	public static void SalirLaberinto(Celda[][] lab, Celda inicio, Celda fin, String estrategia) {
 		int profundidad = 1000000;
-
 		Frontera frontera = Frontera.getFrontera();
 		List<String> visitados = new ArrayList<String>();
+		List<Nodo> listaNodos = new ArrayList<Nodo>();
 		boolean solucion = false;
 		Nodo nodo = null;
-
 		int id = 0;
 
 		int valorinicial = valorInicial(estrategia, inicio, fin);
 
 		Nodo inicial = new Nodo(id++, 0, "(0, 0)", null, null, 0, heuristica(inicio, fin), valorinicial, inicio);
 		frontera.insertar(inicial);
-
+		listaNodos.add(inicial);
 		while (!frontera.esVacia() && !solucion) {
 			nodo = frontera.retirar();
 			if (esObjetivo(nodo, fin)) {
@@ -30,27 +29,48 @@ public class Busqueda {
 			// Esto comprobarlo
 			else if (!visitados.contains(nodo.getId_estado()) && nodo.getProfundidad() < profundidad) {
 				visitados.add(nodo.getId_estado());
-				List<Nodo> hijos = new ArrayList<Nodo>();
-				hijos = expandirNodo(lab, estrategia, nodo, id++, fin);
-				for (Nodo n : hijos) {
-					frontera.insertar(n);
-				}
+				expandirNodo(lab, frontera, estrategia, nodo, id++, fin, listaNodos);
 			}
 
 		}
 		if (solucion) {
 			// Hay que asignar en el lab los valores 4 a los que son solución, 5 a los que
 			// están en la frontera y 6 a los que están visitados
-			
-			crearNodosSolucion(frontera, visitados, nodo, inicial);
+			crearNodosSolucion(nodo, inicial);
+			pintarFronteraVisitados(frontera, visitados, listaNodos);
 
 		} else if (!solucion) {
 			System.out.println("No hay solución.");
 		}
 	}
 
-	private static void crearNodosSolucion(Frontera frontera, List<String> visitados, Nodo nodoFinal,
-			Nodo nodoInicial) {
+	private static void pintarFronteraVisitados(Frontera frontera, List<String> visitados, List<Nodo> listaNodos) {
+		Nodo nodo;
+		String id;
+		// Vaciamos la frontera
+		while (!frontera.esVacia()) {
+			nodo = frontera.retirar();
+			if (nodo.getCelda().getvalue() != 4) {
+				nodo.getCelda().setvalue(5);
+			}
+		}
+		// Vemos los visitados
+		while (!visitados.isEmpty()) {
+			id = visitados.remove(0);
+			for (Nodo n : listaNodos) {
+				if (n.getId_estado() == id) {
+					if (n.getCelda().getvalue() != 4 && n.getCelda().getvalue() != 5) {
+						n.getCelda().setvalue(6);
+					}
+				}
+
+			}
+
+		}
+
+	}
+
+	private static void crearNodosSolucion(Nodo nodoFinal, Nodo nodoInicial) {
 		List<Nodo> solucion = new ArrayList<Nodo>();
 		solucion.add(nodoFinal);
 		Nodo padre = nodoFinal.getId_padre();
@@ -60,20 +80,19 @@ public class Busqueda {
 
 			padre = padre.getId_padre();
 			solucion.add(padre);
-			
-			System.out.println(padre.getId_estado());
 		}
-		
-		//Hasta aquí
-		for(Nodo d : solucion) {
+
+		// Hasta aquí
+		for (Nodo d : solucion) {
 			d.getCelda().setvalue(4);
 		}
 	}
-	//El método valorInicial crea el valor inicial del primer nodo
+
+	// El método valorInicial crea el valor inicial del primer nodo
 	private static int valorInicial(String estrategia, Celda inicial, Celda fin) {
-		
+
 		int valor = 0;
-		
+
 		switch (estrategia) {
 		case "BREADTH":
 			valor = 0;
@@ -98,16 +117,16 @@ public class Busqueda {
 		return valor;
 	}
 
-	private static List<Nodo> expandirNodo(Celda[][] lab, String estrategia, Nodo nodo, int id, Celda fin) {
-		List<Nodo> listanodos = new ArrayList<Nodo>();
+	private static void expandirNodo(Celda[][] lab, Frontera frontera, String estrategia, Nodo nodo, int id, Celda fin,
+			List<Nodo> listaNodos) {
 		List<Celda> vecinos = nodo.getCelda().obtenerSucesores(lab, nodo.getCelda());
 		for (Celda c : vecinos) {
-			Nodo n = new Nodo(id++, c.getvalue() + 1, "(" + c.getFila() + ", " + c.getColumna() + ")", nodo,
+			Nodo n = new Nodo(id, c.getvalue() + 1, "(" + c.getFila() + ", " + c.getColumna() + ")", nodo,
 					direccion(nodo.getCelda(), c), nodo.getProfundidad() + 1, heuristica(c, fin), 0, c);
 			n.setValor(calcula(estrategia, nodo, n, fin));
-			listanodos.add(n);
+			frontera.insertar(n);
+			listaNodos.add(n);
 		}
-		return listanodos;
 	}
 
 	private static String direccion(Celda actual, Celda destino) {
@@ -159,7 +178,7 @@ public class Busqueda {
 			break;
 
 		case "GREEDY":
-			valor =  heuristica(hijo.getCelda(), fin);
+			valor = heuristica(hijo.getCelda(), fin);
 			break;
 
 		case "A":
