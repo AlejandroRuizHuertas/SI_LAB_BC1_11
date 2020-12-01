@@ -19,6 +19,14 @@ public class Celda {
 		this.neighbors = neighbors;
 		this.excavada = false;
 	}
+	
+	public Celda(int fila, int columna, boolean[] neighbors, int value) {
+		this.fila = fila;
+		this.columna = columna;
+		this.value = value;
+		this.neighbors = neighbors;
+		this.excavada = false;
+	}
 
 	private int valorCelda() {
 		Random random = new Random();
