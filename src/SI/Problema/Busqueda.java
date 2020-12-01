@@ -104,8 +104,10 @@ public class Busqueda {
 				Nodo nodo = solucion.pop();
 				contenido += nodo.toString();
 			}
+
 			String ruta = "solution_" + (nodoFinal.getCelda().getFila() + 1) + "x"
 					+ (nodoFinal.getCelda().getColumna() + 1) + "_ST.txt";
+
 
 			File file = new File(ruta);
 			if (!file.exists()) {
