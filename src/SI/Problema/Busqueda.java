@@ -1,7 +1,11 @@
 package SI.Problema;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 import SI.Wilson.Celda;
 
@@ -34,13 +38,13 @@ public class Busqueda {
 
 		}
 		if (solucion) {
-			// Hay que asignar en el lab los valores 4 a los que son soluciÛn, 5 a los que
-			// est·n en la frontera y 6 a los que est·n visitados
+			// Hay que asignar en el lab los valores 4 a los que son soluci√≥n, 5 a los que
+			// est√°n en la frontera y 6 a los que est√°n visitados
 			crearNodosSolucion(nodo, inicial);
 			pintarFronteraVisitados(frontera, visitados, listaNodos);
 
 		} else if (!solucion) {
-			System.out.println("No hay soluciÛn.");
+			System.out.println("No hay soluci√≥n.");
 		}
 	}
 
@@ -72,23 +76,52 @@ public class Busqueda {
 
 	private static void crearNodosSolucion(Nodo nodoFinal, Nodo nodoInicial) {
 		List<Nodo> solucion = new ArrayList<Nodo>();
+		Stack<Nodo> pila = new Stack<Nodo>();
 		solucion.add(nodoFinal);
+		pila.push(nodoFinal);
 		Nodo padre = nodoFinal.getId_padre();
 		solucion.add(padre);
+		pila.push(padre);
 
 		while (!padre.equals(nodoInicial) && padre.getId_estado() != "(0, 0)") {
 
 			padre = padre.getId_padre();
 			solucion.add(padre);
+			pila.push(padre);
 		}
 
-		// Hasta aquÌ
+		
+		// Hasta aqu√≠
 		for (Nodo d : solucion) {
 			d.getCelda().setvalue(4);
 		}
+		crearJSONSolucion(pila, nodoFinal);
 	}
 
-	// El mÈtodo valorInicial crea el valor inicial del primer nodo
+	private static void crearJSONSolucion(Stack<Nodo> solucion, Nodo nodoFinal) {
+		try {
+			String contenido = "[id][cost,state,father_id,action,depth,h,value]\n";
+			while(!solucion.isEmpty()) {
+				Nodo nodo = solucion.pop();
+				contenido += nodo.toString();
+			}
+			String ruta = "solution_" + nodoFinal.getCelda().getFila() + "x" + nodoFinal.getCelda().getColumna()
+					+ "_ST";
+			
+			File file = new File(ruta);
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+			FileWriter fw = new FileWriter(file);
+			BufferedWriter bw = new BufferedWriter(fw);
+			bw.write(contenido);
+			bw.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// El m√©todo valorInicial crea el valor inicial del primer nodo
 	private static int valorInicial(String estrategia, Celda inicial, Celda fin) {
 
 		int valor = 0;

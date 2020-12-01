@@ -5,6 +5,17 @@ import java.util.List;
 import SI.Wilson.Celda;
 
 public class Nodo implements Comparable<Nodo> {
+	@Override
+	public String toString() {
+		if (id_padre == null) {
+			return "[" + id + "][" + costo + "," + id_estado + ",None,None," + profundidad + "," + heuristica + ","
+					+ valor + "]\n";
+		} else {
+			return "[" + id + "][" + costo + "," + id_estado + "," + id_padre.getId() + "," + accion + "," + profundidad
+					+ "," + heuristica + "," + valor + "]\n";
+		}
+	}
+
 	private int id;
 	private int costo;
 	private String id_estado; // Las coordenadas del estado actual
