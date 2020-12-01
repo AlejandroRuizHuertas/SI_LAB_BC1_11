@@ -88,7 +88,7 @@ public class PuzzleJSON {
 			int fil = Integer.parseInt(fila);
 			int col = Integer.parseInt(columna);
 			CeldaJSON cell = entry.getValue();
-			lab[fil][col] = new Celda(fil, col, cell.getNeighbors());
+			lab[fil][col] = new Celda(fil, col, cell.getNeighbors(), cell.getValue());
 
 		}
 		return lab;

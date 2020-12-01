@@ -10,6 +10,7 @@ import java.util.Stack;
 import SI.Wilson.Celda;
 
 public class Busqueda {
+	static int id = 0;
 
 	public static void SalirLaberinto(Celda[][] lab, Celda inicio, Celda fin, String estrategia) {
 		int profundidad = 1000000;
@@ -18,7 +19,6 @@ public class Busqueda {
 		List<Nodo> listaNodos = new ArrayList<Nodo>();
 		boolean solucion = false;
 		Nodo nodo = null;
-		int id = 0;
 
 		int valorinicial = valorInicial(estrategia, inicio, fin);
 
@@ -33,7 +33,7 @@ public class Busqueda {
 			// Esto comprobarlo
 			else if (!visitados.contains(nodo.getId_estado()) && nodo.getProfundidad() < profundidad) {
 				visitados.add(nodo.getId_estado());
-				expandirNodo(lab, frontera, estrategia, nodo, id++, fin, listaNodos);
+				expandirNodo(lab, frontera, estrategia, nodo, fin, listaNodos);
 			}
 
 		}
@@ -90,7 +90,6 @@ public class Busqueda {
 			pila.push(padre);
 		}
 
-		
 		// Hasta aquí
 		for (Nodo d : solucion) {
 			d.getCelda().setvalue(4);
@@ -101,13 +100,13 @@ public class Busqueda {
 	private static void crearJSONSolucion(Stack<Nodo> solucion, Nodo nodoFinal) {
 		try {
 			String contenido = "[id][cost,state,father_id,action,depth,h,value]\n";
-			while(!solucion.isEmpty()) {
+			while (!solucion.isEmpty()) {
 				Nodo nodo = solucion.pop();
 				contenido += nodo.toString();
 			}
-			String ruta = "solution_" + nodoFinal.getCelda().getFila() + "x" + nodoFinal.getCelda().getColumna()
-					+ "_ST";
-			
+			String ruta = "solution_" + (nodoFinal.getCelda().getFila() + 1) + "x"
+					+ (nodoFinal.getCelda().getColumna() + 1) + "_ST.txt";
+
 			File file = new File(ruta);
 			if (!file.exists()) {
 				file.createNewFile();
@@ -150,12 +149,13 @@ public class Busqueda {
 		return valor;
 	}
 
-	private static void expandirNodo(Celda[][] lab, Frontera frontera, String estrategia, Nodo nodo, int id, Celda fin,
+	private static void expandirNodo(Celda[][] lab, Frontera frontera, String estrategia, Nodo nodo, Celda fin,
 			List<Nodo> listaNodos) {
 		List<Celda> vecinos = nodo.getCelda().obtenerSucesores(lab, nodo.getCelda());
 		for (Celda c : vecinos) {
-			Nodo n = new Nodo(id, c.getvalue() + 1, "(" + c.getFila() + ", " + c.getColumna() + ")", nodo,
-					direccion(nodo.getCelda(), c), nodo.getProfundidad() + 1, heuristica(c, fin), 0, c);
+			Nodo n = new Nodo(id++, (nodo.getCosto() + c.getvalue() + 1),
+					"(" + c.getFila() + ", " + c.getColumna() + ")", nodo, direccion(nodo.getCelda(), c),
+					nodo.getProfundidad() + 1, heuristica(c, fin), 0, c);
 			n.setValor(calcula(estrategia, nodo, n, fin));
 			frontera.insertar(n);
 			listaNodos.add(n);
