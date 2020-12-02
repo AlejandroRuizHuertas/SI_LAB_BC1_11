@@ -40,7 +40,7 @@ public class Busqueda {
 		if (solucion) {
 			// Hay que asignar en el lab los valores 4 a los que son solución, 5 a los que
 			// están en la frontera y 6 a los que están visitados
-			crearNodosSolucion(nodo, inicial);
+			crearNodosSolucion(nodo, inicial, estrategia);
 			pintarFronteraVisitados(frontera, visitados, listaNodos);
 
 		} else if (!solucion) {
@@ -74,7 +74,7 @@ public class Busqueda {
 
 	}
 
-	private static void crearNodosSolucion(Nodo nodoFinal, Nodo nodoInicial) {
+	private static void crearNodosSolucion(Nodo nodoFinal, Nodo nodoInicial, String estrategia) {
 		List<Nodo> solucion = new ArrayList<Nodo>();
 		Stack<Nodo> pila = new Stack<Nodo>();
 		solucion.add(nodoFinal);
@@ -94,10 +94,10 @@ public class Busqueda {
 		for (Nodo d : solucion) {
 			d.getCelda().setvalue(4);
 		}
-		crearJSONSolucion(pila, nodoFinal);
+		crearJSONSolucion(pila, nodoFinal, estrategia);
 	}
 
-	private static void crearJSONSolucion(Stack<Nodo> solucion, Nodo nodoFinal) {
+	private static void crearJSONSolucion(Stack<Nodo> solucion, Nodo nodoFinal, String estrategia) {
 		try {
 			String contenido = "[id][cost,state,father_id,action,depth,h,value]\n";
 			while (!solucion.isEmpty()) {
@@ -105,7 +105,7 @@ public class Busqueda {
 				contenido += nodo.toString();
 			}
 			String ruta = "solution_" + (nodoFinal.getCelda().getFila() + 1) + "x"
-					+ (nodoFinal.getCelda().getColumna() + 1) + "_ST.txt";
+					+ (nodoFinal.getCelda().getColumna() + 1) + "_" + estrategia + ".txt";
 
 			File file = new File(ruta);
 			if (!file.exists()) {
@@ -151,7 +151,7 @@ public class Busqueda {
 
 	private static void expandirNodo(Celda[][] lab, Frontera frontera, String estrategia, Nodo nodo, Celda fin,
 			List<Nodo> listaNodos) {
-		List<Celda> vecinos = nodo.getCelda().obtenerSucesores(lab, nodo.getCelda());
+		List<Celda> vecinos = nodo.getCelda().obtenerSucesores(lab, nodo.getCelda(), nodo.getId_padre());
 		for (Celda c : vecinos) {
 			Nodo n = new Nodo(id++, (nodo.getCosto() + c.getvalue() + 1),
 					"(" + c.getFila() + ", " + c.getColumna() + ")", nodo, direccion(nodo.getCelda(), c),
