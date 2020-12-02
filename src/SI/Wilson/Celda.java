@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import SI.Problema.Nodo;
+
 public class Celda {
 
 	private int fila;
@@ -19,7 +21,7 @@ public class Celda {
 		this.neighbors = neighbors;
 		this.excavada = false;
 	}
-	
+
 	public Celda(int fila, int columna, boolean[] neighbors, int value) {
 		this.fila = fila;
 		this.columna = columna;
@@ -136,7 +138,7 @@ public class Celda {
 
 	}
 
-	public static List<Celda> obtenerSucesores(Celda[][] laberinto, Celda actual) {
+	public static List<Celda> obtenerSucesores(Celda[][] laberinto, Celda actual, Nodo padre) {
 		List<Celda> listaneighbors = new ArrayList<Celda>();
 
 		Celda norte = comprobarSucesor(-1, 0, laberinto, actual);
@@ -155,8 +157,8 @@ public class Celda {
 		}
 		if (oeste != null) {
 			listaneighbors.add(oeste);
-		}
 
+		}
 		return listaneighbors;
 
 	}
