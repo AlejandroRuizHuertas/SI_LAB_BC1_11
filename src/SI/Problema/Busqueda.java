@@ -188,7 +188,7 @@ public class Busqueda {
 			return true;
 		else
 			return false;
-	}
+	}	
 
 	private static int heuristica(Celda estado, Celda fin) {
 		int h1 = Math.abs(estado.getFila() - fin.getFila());
@@ -209,7 +209,7 @@ public class Busqueda {
 			break;
 
 		case "UNIFORM":
-			valor = padre.getCosto() + 1;
+			valor = hijo.getCosto();
 			break;
 
 		case "GREEDY":
