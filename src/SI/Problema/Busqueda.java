@@ -94,10 +94,10 @@ public class Busqueda {
 		for (Nodo d : solucion) {
 			d.getCelda().setvalue(4);
 		}
-		crearJSONSolucion(pila, nodoFinal, estrategia);
+		crearTXTSolucion(pila, nodoFinal, estrategia);
 	}
 
-	private static void crearJSONSolucion(Stack<Nodo> solucion, Nodo nodoFinal, String estrategia) {
+	private static void crearTXTSolucion(Stack<Nodo> solucion, Nodo nodoFinal, String estrategia) {
 		try {
 			String contenido = "[id][cost,state,father_id,action,depth,h,value]\n";
 			while (!solucion.isEmpty()) {
